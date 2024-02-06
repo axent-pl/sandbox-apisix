@@ -1,0 +1,73 @@
+routes:
+  - name: "{service_name}-route-list"
+    service_id: "{service_name}-service"
+    uri: "/anything"
+    methods:
+      - GET
+    plugins:
+      openid-connect: &openid_connect_plugin
+        accept_none_alg: false
+        accept_unsupported_alg: true
+        access_token_expires_leeway: 0
+        client_jwt_assertion_expires_in: 60
+        force_reauthorize: false
+        iat_slack: 120
+        introspection_endpoint_auth_method: "client_secret_basic"
+        introspection_interval: 0
+        jwk_expires_in: 86400
+        jwt_verification_cache_ignore: false
+        logout_path: "/logout"
+        renew_access_token_on_expiry: true
+        revoke_tokens_on_logout: false
+        set_access_token_header: true
+        set_id_token_header: true
+        set_refresh_token_header: false
+        timeout: 3
+        token_endpoint_auth_method: "client_secret_basic"
+        unauth_action: "auth"
+        use_nonce: false
+        use_pkce: false
+
+        client_id: ""
+        client_secret: ""
+        discovery: ""
+        public_key: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxZS56Wt4ybJQqmxEa5nR7cZ7sbuywvDtEwRWbzey7VNjO34GAA6mzT9XKzQK4/X8rGpWjJdfYV3DWoGyRpWQZClVOEgMFN/y0ZySrcSLsqSG7MccXVPFL5xKCVndYbD76ae9T/SY52AqT1Ly1/KKA1ehEYAaxP6n9IQ3/SSOlUMhqZUnqZs8AXDm+5ZzUs4TG+ypyMIQfgldeSPVElZTAZKBPUG2gMU+/7GjXCHoR+DQSB0elpPjFOq8dTifzK1P1JNuy7xWOjKjo5f3gGEx9jucxFej2iIzA2DC1NIa5F2uAlfRtG3AyQhyKOR78koG86afBhYL0A+VscXv8pWDsQIDAQAB
+          -----END PUBLIC KEY-----
+        bearer_only: true
+        realm: bank
+        introspection_endpoint: ""
+        token_signing_alg_values_expected: RS256
+        scope: "openid email profile"
+        ssl_verify: false
+        set_userinfo_header: true
+        access_token_in_authorization_header: true
+  - name: "{service_name}-route-create"
+    service_id: "{service_name}-service"
+    uri: "/anything"
+    methods:
+      - POST
+    plugins:
+      openid-connect: *openid_connect_plugin
+  - name: "{service_name}-route-read"
+    service_id: "{service_name}-service"
+    uri: "/anything/*"
+    methods:
+      - GET
+    plugins:
+      openid-connect: *openid_connect_plugin
+  - name: "{service_name}-route-update"
+    service_id: "{service_name}-service"
+    uri: "/anything/*"
+    methods:
+      - PUT
+    plugins:
+      openid-connect: *openid_connect_plugin
+  - name: "{service_name}-route-delete"
+    service_id: "{service_name}-service"
+    uri: "/anything/*"
+    methods:
+      - DELETE
+    plugins:
+      openid-connect: *openid_connect_plugin

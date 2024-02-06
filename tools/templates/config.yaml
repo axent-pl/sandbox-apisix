@@ -1,0 +1,25 @@
+name: Basic configuration
+version: 1.0.0
+global_rules:
+- id: 1
+  plugins:
+    loki-logger:
+      batch_max_size: 1000
+      buffer_duration: 60
+      endpoint_addrs:
+      - http://grafana-loki:3100
+      endpoint_uri: /loki/api/v1/push
+      inactive_timeout: 5
+      include_req_body: false
+      include_resp_body: false
+      keepalive: true
+      keepalive_pool: 5
+      keepalive_timeout: 60000
+      log_labels:
+        job: apisix
+      max_retry_count: 0
+      name: loki logger
+      retry_delay: 1
+      ssl_verify: false
+      tenant_id: fake
+      timeout: 3000
