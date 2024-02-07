@@ -82,6 +82,11 @@ services:
       - 3100:3100
     networks:
       - ax
+  prometheus:
+    build:
+      context: services/prometheus
+    networks:
+      - ax
 networks:
   ax:
     driver: bridge
