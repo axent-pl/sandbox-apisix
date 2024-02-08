@@ -7,6 +7,7 @@ import (
 )
 
 type ResponsePayload struct {
+	Method  string              `json:"method"`
 	Path    string              `json:"path"`
 	Query   string              `json:"query"`
 	Headers map[string][]string `json:"headers"`
@@ -22,6 +23,7 @@ func main() {
 		}
 
 		responsePayload := ResponsePayload{
+			Method:  r.Method,
 			Path:    r.URL.Path,
 			Query:   r.URL.RawQuery,
 			Headers: r.Header,
