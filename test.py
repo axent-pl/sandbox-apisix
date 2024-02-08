@@ -5,7 +5,7 @@ import re
 KC_ORIGIN = 'http://localhost:2380'
 KC_CLIENT = 'bank-app'
 KC_SECRET = 'rifb7zJJzE2RKStq74pEPMg29W5GkyIC'
-KC_USER = 'banp-app-user'
+KC_USER = 'bank-app-user'
 KC_PASS = 'bankappuserpass'
 
 GW_ORIGIN = 'http://localhost:9080'
@@ -98,12 +98,13 @@ def call_endpoint(authorization):
     else:
         raise Exception('Invalid response')
 
-def run_ab_tests(authorization):
+def run_wrk_tests():
     tests = []
     # cmd = f'ab -r -k -n 2000 -c 400 -H "Host: {GW_SERVICE_HOST}" -H "Authorization: {authorization}" {GW_ORIGIN}{GW_SERVICE_PATH}'
-    for service,host in {'httpgobin':MS2_ORIGIN, 'gateway':GW_ORIGIN}.items():
+    for service,host in {'gateway':GW_ORIGIN}.items(): #'httpgobin':MS2_ORIGIN, 
         for connections in [10,20,50,100,200]:
-            for threads in [2,4,8]:
+            for threads in [1,2,3,4]:
+                authorization = get_token()
                 cmd = f'wrk -t{threads} -c{connections} -d30s -H "Host: {GW_SERVICE_HOST}" -H "Authorization: {authorization}" {host}{GW_SERVICE_PATH}'
                 out = os.popen(cmd).read()
                 test_name = f'{service}-t{threads}-c{connections}'
@@ -113,6 +114,6 @@ def run_ab_tests(authorization):
     return tests
 
 if __name__ == '__main__':
-    token = get_token()
-    call_endpoint(authorization=token)
-    run_ab_tests(authorization=token)
+    authorization = get_token()
+    call_endpoint(authorization=authorization)
+    # run_wrk_tests()
