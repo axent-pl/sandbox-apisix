@@ -1,21 +1,15 @@
 version: '3.4'
 
 services:
-  keycloak-db:
-    image: postgres:13.2
-    environment:
-      POSTGRES_DB: ${POSTGRESQL_DB}
-      POSTGRES_USER: ${POSTGRESQL_USER}
-      POSTGRES_PASSWORD: ${POSTGRESQL_PASS}
-    networks:
-      - ax
   keycloak:
     platform: linux/x86_64
-    image: quay.io/keycloak/keycloak:latest
+    build: 
+      context: services/keycloak
     command:
       - start-dev
       - --http-port=2380
       - --http-relative-path=/auth
+      - --import-realm
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
