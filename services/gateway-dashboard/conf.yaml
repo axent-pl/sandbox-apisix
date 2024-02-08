@@ -14,6 +14,16 @@ conf:
       file_path:
         logs/error.log  # supports relative path, absolute path, standard output
                         # such as: logs/error.log, /tmp/logs/error.log, /dev/stdout, /dev/stderr
+
+  security:
+    access_control_allow_origin: "http://httpbin.org"
+    access_control_allow_credentials: true          # support using custom cors configration
+    access_control_allow_headers: "Authorization"
+    access_control-allow_methods: "*"
+    x_frame_options: "deny"
+    content_security_policy: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src localhost:3000"  # You can set frame-src to provide content for your grafana panel.
+
+
 authentication:
   secret:
     secret              # secret for jwt token generation.
