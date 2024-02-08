@@ -23,3 +23,6 @@ global_rules:
       ssl_verify: false
       tenant_id: fake
       timeout: 3000
+    prometheus:
+      _meta:
+        disable: false
