@@ -21,6 +21,7 @@ set -eo pipefail
 PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 
 # added {{{
+rm -f /home/apisix/routes-loaded
 load_config() {
   SECONDS=0
   echo "[INFO ][axent-pl]: gateway startup started"
@@ -38,6 +39,7 @@ load_config() {
   echo "[INFO ][axent-pl]: adc sync started"
   SECONDS=0
   adc sync -f /home/apisix/routes.yaml > /dev/null
+  touch /home/apisix/routes-loaded
   DURATION=$SECONDS
   echo "[INFO ][axent-pl]: adc sync done in $DURATION seconds"
 }

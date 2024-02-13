@@ -22,6 +22,11 @@ services:
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
       - ETCD_ADVERTISE_CLIENT_URLS=http://gateway-db:2379
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 5s
+      timeout: 10s
+      retries: 6
     networks:
       - ax
   gateway:
@@ -39,6 +44,16 @@ services:
       - 9443:9443
       - 9090:9092
       - 9100:9100
+    depends_on:
+      gateway-db:
+        condition: service_healthy
+      grafana-loki:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "cat", "/home/apisix/routes-loaded"]
+      interval: 30s
+      timeout: 10s
+      retries: 30
     networks:
       - ax
   gateway-dashboard:
@@ -47,6 +62,9 @@ services:
       context: services/gateway-dashboard
     ports:
       - 9000:9000
+    depends_on:
+      gateway-db:
+        condition: service_healthy
     networks:
       - ax
   httpgobin:
@@ -67,6 +85,9 @@ services:
       context: services/grafana
     ports:
       - 3000:3000
+    depends_on:
+      grafana-loki:
+        condition: service_healthy
     networks:
       - ax
   grafana-loki:
@@ -74,11 +95,19 @@ services:
       context: services/grafana-loki
     ports:
       - 3100:3100
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://grafana-loki:3100/ready"]
+      interval: 5s
+      timeout: 10s
+      retries: 6
     networks:
       - ax
   prometheus:
     build:
       context: services/prometheus
+    depends_on:
+      gateway:
+        condition: service_healthy
     networks:
       - ax
 networks:
