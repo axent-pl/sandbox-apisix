@@ -1,0 +1,3 @@
+services:
+- name: {service_name}
+  url: http://httpgobin:8080

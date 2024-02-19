@@ -1,0 +1,5326 @@
+_format_version: '2.1'
+_transform: true
+plugins:
+- name: tcp-log
+  config:
+    host: kong-etl
+    port: 1111
+- name: prometheus
+  config:
+    latency_metrics: true
+    upstream_health_metrics: true
+    per_consumer: true
+    status_code_metrics: true
+    bandwidth_metrics: true
+consumers:
+- username: jwt-consumer
+  custom_id: jwt-consumer-id
+  jwt_secrets:
+  - algorithm: RS256
+    key: http://localhost:2380/auth/realms/bank
+    rsa_public_key: '-----BEGIN PUBLIC KEY-----
+
+      MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqi32ruIMLgsLhePY2lqRBo+1YnNrE7NyE827lWyEgH1zfI+WKktlH9rOiSt4wZOgHVCg9B0QNSipXkqfV9HxfSBi6KIkkxtpAErFGbhK4vTYooKNDgkCZ0A6U7jqW1l2HtzxHm5UyVnedW/lmqJmX2D4XMkWlX6FmoAXkOa9Si+qwGJTaDhVHx7B4OfmsNPIcia20ujrzoha6c1L4Na2bxt9XyQPt1M873brHgKqN7qc2VCFS212qb3PwBRjl8WA4M7UoWxMkyZAoHbLjdZksZJ1vE4pASfNo0rRo0awLNSE7pjy/9pdoJ4rSKw1s4Ww6E7FEUVSvMoffVnaEuQv6uZOmK1B6ixkaER0NYzlubHUIZhwO9fQHwTgYv9YUoD9X2O9WZDB2+DlkazToem+wO7nJ562o8zXGi4zGEm9lP54mA5tyyJqbmOoAA4bZpWaphiMxx07vwULlRMFapIwbRbMsHnjBbe0VkRl21dyqbIW8yracSql0YhKohnovEDhh6McuPuGqsxAsrjR5V7KBDF6Xp37f//JSKNhym1jVf7F6Mi6bYhy2eIF9CKrYRC5aFWg0f08sMiGiepsBWeo16hocI2Ec0kMZPKDGoA+OpSIy77ZZUO8zGVYk7Uqup7vnQfCS/oREGsLwOYG879ajqlguNFNC4ZIP0HCrnC7bb8CAwEAAQ==
+
+      -----END PUBLIC KEY-----'
+services:
+- name: adagio-angora
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-angora-route-create
+    hosts:
+    - adagio-angora.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-angora-route-read
+    hosts:
+    - adagio-angora.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-angora-route-update
+    hosts:
+    - adagio-angora.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-angora-route-list
+    hosts:
+    - adagio-angora.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-aroma
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-aroma-route-create
+    hosts:
+    - adagio-aroma.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-aroma-route-read
+    hosts:
+    - adagio-aroma.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-aroma-route-update
+    hosts:
+    - adagio-aroma.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-aroma-route-list
+    hosts:
+    - adagio-aroma.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-bagel
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-bagel-route-create
+    hosts:
+    - adagio-bagel.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-bagel-route-read
+    hosts:
+    - adagio-bagel.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bagel-route-update
+    hosts:
+    - adagio-bagel.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bagel-route-list
+    hosts:
+    - adagio-bagel.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-balinese
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-balinese-route-create
+    hosts:
+    - adagio-balinese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-balinese-route-read
+    hosts:
+    - adagio-balinese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-balinese-route-update
+    hosts:
+    - adagio-balinese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-balinese-route-list
+    hosts:
+    - adagio-balinese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-batter
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-batter-route-create
+    hosts:
+    - adagio-batter.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-batter-route-read
+    hosts:
+    - adagio-batter.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-batter-route-update
+    hosts:
+    - adagio-batter.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-batter-route-list
+    hosts:
+    - adagio-batter.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-beans
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-beans-route-create
+    hosts:
+    - adagio-beans.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-beans-route-read
+    hosts:
+    - adagio-beans.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-beans-route-update
+    hosts:
+    - adagio-beans.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-beans-route-list
+    hosts:
+    - adagio-beans.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-beer
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-beer-route-create
+    hosts:
+    - adagio-beer.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-beer-route-read
+    hosts:
+    - adagio-beer.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-beer-route-update
+    hosts:
+    - adagio-beer.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-beer-route-list
+    hosts:
+    - adagio-beer.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-bengal
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-bengal-route-create
+    hosts:
+    - adagio-bengal.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-bengal-route-read
+    hosts:
+    - adagio-bengal.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bengal-route-update
+    hosts:
+    - adagio-bengal.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bengal-route-list
+    hosts:
+    - adagio-bengal.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-birman
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-birman-route-create
+    hosts:
+    - adagio-birman.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-birman-route-read
+    hosts:
+    - adagio-birman.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-birman-route-update
+    hosts:
+    - adagio-birman.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-birman-route-list
+    hosts:
+    - adagio-birman.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-biscuit
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-biscuit-route-create
+    hosts:
+    - adagio-biscuit.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-biscuit-route-read
+    hosts:
+    - adagio-biscuit.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-biscuit-route-update
+    hosts:
+    - adagio-biscuit.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-biscuit-route-list
+    hosts:
+    - adagio-biscuit.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-bobtail
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-bobtail-route-create
+    hosts:
+    - adagio-bobtail.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-bobtail-route-read
+    hosts:
+    - adagio-bobtail.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bobtail-route-update
+    hosts:
+    - adagio-bobtail.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bobtail-route-list
+    hosts:
+    - adagio-bobtail.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-bombay
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-bombay-route-create
+    hosts:
+    - adagio-bombay.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-bombay-route-read
+    hosts:
+    - adagio-bombay.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bombay-route-update
+    hosts:
+    - adagio-bombay.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bombay-route-list
+    hosts:
+    - adagio-bombay.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-bread
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-bread-route-create
+    hosts:
+    - adagio-bread.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-bread-route-read
+    hosts:
+    - adagio-bread.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bread-route-update
+    hosts:
+    - adagio-bread.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-bread-route-list
+    hosts:
+    - adagio-bread.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-broth
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-broth-route-create
+    hosts:
+    - adagio-broth.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-broth-route-read
+    hosts:
+    - adagio-broth.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-broth-route-update
+    hosts:
+    - adagio-broth.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-broth-route-list
+    hosts:
+    - adagio-broth.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-burger
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-burger-route-create
+    hosts:
+    - adagio-burger.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-burger-route-read
+    hosts:
+    - adagio-burger.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-burger-route-update
+    hosts:
+    - adagio-burger.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-burger-route-list
+    hosts:
+    - adagio-burger.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-burmese
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-burmese-route-create
+    hosts:
+    - adagio-burmese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-burmese-route-read
+    hosts:
+    - adagio-burmese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-burmese-route-update
+    hosts:
+    - adagio-burmese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-burmese-route-list
+    hosts:
+    - adagio-burmese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-burrito
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-burrito-route-create
+    hosts:
+    - adagio-burrito.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-burrito-route-read
+    hosts:
+    - adagio-burrito.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-burrito-route-update
+    hosts:
+    - adagio-burrito.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-burrito-route-list
+    hosts:
+    - adagio-burrito.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-butter
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-butter-route-create
+    hosts:
+    - adagio-butter.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-butter-route-read
+    hosts:
+    - adagio-butter.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-butter-route-update
+    hosts:
+    - adagio-butter.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-butter-route-list
+    hosts:
+    - adagio-butter.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cake
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cake-route-create
+    hosts:
+    - adagio-cake.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cake-route-read
+    hosts:
+    - adagio-cake.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cake-route-update
+    hosts:
+    - adagio-cake.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cake-route-list
+    hosts:
+    - adagio-cake.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-calico
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-calico-route-create
+    hosts:
+    - adagio-calico.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-calico-route-read
+    hosts:
+    - adagio-calico.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-calico-route-update
+    hosts:
+    - adagio-calico.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-calico-route-list
+    hosts:
+    - adagio-calico.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-candy
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-candy-route-create
+    hosts:
+    - adagio-candy.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-candy-route-read
+    hosts:
+    - adagio-candy.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-candy-route-update
+    hosts:
+    - adagio-candy.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-candy-route-list
+    hosts:
+    - adagio-candy.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-caramel
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-caramel-route-create
+    hosts:
+    - adagio-caramel.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-caramel-route-read
+    hosts:
+    - adagio-caramel.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-caramel-route-update
+    hosts:
+    - adagio-caramel.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-caramel-route-list
+    hosts:
+    - adagio-caramel.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-caviar
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-caviar-route-create
+    hosts:
+    - adagio-caviar.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-caviar-route-read
+    hosts:
+    - adagio-caviar.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-caviar-route-update
+    hosts:
+    - adagio-caviar.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-caviar-route-list
+    hosts:
+    - adagio-caviar.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cheese
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cheese-route-create
+    hosts:
+    - adagio-cheese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cheese-route-read
+    hosts:
+    - adagio-cheese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cheese-route-update
+    hosts:
+    - adagio-cheese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cheese-route-list
+    hosts:
+    - adagio-cheese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-chili
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-chili-route-create
+    hosts:
+    - adagio-chili.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-chili-route-read
+    hosts:
+    - adagio-chili.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-chili-route-update
+    hosts:
+    - adagio-chili.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-chili-route-list
+    hosts:
+    - adagio-chili.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-chimichanga
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-chimichanga-route-create
+    hosts:
+    - adagio-chimichanga.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-chimichanga-route-read
+    hosts:
+    - adagio-chimichanga.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-chimichanga-route-update
+    hosts:
+    - adagio-chimichanga.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-chimichanga-route-list
+    hosts:
+    - adagio-chimichanga.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-chocolate
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-chocolate-route-create
+    hosts:
+    - adagio-chocolate.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-chocolate-route-read
+    hosts:
+    - adagio-chocolate.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-chocolate-route-update
+    hosts:
+    - adagio-chocolate.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-chocolate-route-list
+    hosts:
+    - adagio-chocolate.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cider
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cider-route-create
+    hosts:
+    - adagio-cider.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cider-route-read
+    hosts:
+    - adagio-cider.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cider-route-update
+    hosts:
+    - adagio-cider.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cider-route-list
+    hosts:
+    - adagio-cider.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cobbler
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cobbler-route-create
+    hosts:
+    - adagio-cobbler.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cobbler-route-read
+    hosts:
+    - adagio-cobbler.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cobbler-route-update
+    hosts:
+    - adagio-cobbler.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cobbler-route-list
+    hosts:
+    - adagio-cobbler.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cocoa
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cocoa-route-create
+    hosts:
+    - adagio-cocoa.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cocoa-route-read
+    hosts:
+    - adagio-cocoa.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cocoa-route-update
+    hosts:
+    - adagio-cocoa.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cocoa-route-list
+    hosts:
+    - adagio-cocoa.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-coffee
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-coffee-route-create
+    hosts:
+    - adagio-coffee.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-coffee-route-read
+    hosts:
+    - adagio-coffee.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-coffee-route-update
+    hosts:
+    - adagio-coffee.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-coffee-route-list
+    hosts:
+    - adagio-coffee.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cookie
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cookie-route-create
+    hosts:
+    - adagio-cookie.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cookie-route-read
+    hosts:
+    - adagio-cookie.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cookie-route-update
+    hosts:
+    - adagio-cookie.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cookie-route-list
+    hosts:
+    - adagio-cookie.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cream
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cream-route-create
+    hosts:
+    - adagio-cream.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cream-route-read
+    hosts:
+    - adagio-cream.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cream-route-update
+    hosts:
+    - adagio-cream.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cream-route-list
+    hosts:
+    - adagio-cream.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-croissant
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-croissant-route-create
+    hosts:
+    - adagio-croissant.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-croissant-route-read
+    hosts:
+    - adagio-croissant.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-croissant-route-update
+    hosts:
+    - adagio-croissant.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-croissant-route-list
+    hosts:
+    - adagio-croissant.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-crumble
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-crumble-route-create
+    hosts:
+    - adagio-crumble.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-crumble-route-read
+    hosts:
+    - adagio-crumble.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-crumble-route-update
+    hosts:
+    - adagio-crumble.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-crumble-route-list
+    hosts:
+    - adagio-crumble.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-cuisine
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-cuisine-route-create
+    hosts:
+    - adagio-cuisine.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-cuisine-route-read
+    hosts:
+    - adagio-cuisine.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cuisine-route-update
+    hosts:
+    - adagio-cuisine.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-cuisine-route-list
+    hosts:
+    - adagio-cuisine.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-curd
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-curd-route-create
+    hosts:
+    - adagio-curd.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-curd-route-read
+    hosts:
+    - adagio-curd.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-curd-route-update
+    hosts:
+    - adagio-curd.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-curd-route-list
+    hosts:
+    - adagio-curd.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-dessert
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-dessert-route-create
+    hosts:
+    - adagio-dessert.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-dessert-route-read
+    hosts:
+    - adagio-dessert.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-dessert-route-update
+    hosts:
+    - adagio-dessert.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-dessert-route-list
+    hosts:
+    - adagio-dessert.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-dish
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-dish-route-create
+    hosts:
+    - adagio-dish.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-dish-route-read
+    hosts:
+    - adagio-dish.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-dish-route-update
+    hosts:
+    - adagio-dish.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-dish-route-list
+    hosts:
+    - adagio-dish.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-drink
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-drink-route-create
+    hosts:
+    - adagio-drink.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-drink-route-read
+    hosts:
+    - adagio-drink.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-drink-route-update
+    hosts:
+    - adagio-drink.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-drink-route-list
+    hosts:
+    - adagio-drink.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-eggs
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-eggs-route-create
+    hosts:
+    - adagio-eggs.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-eggs-route-read
+    hosts:
+    - adagio-eggs.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-eggs-route-update
+    hosts:
+    - adagio-eggs.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-eggs-route-list
+    hosts:
+    - adagio-eggs.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-empanada
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-empanada-route-create
+    hosts:
+    - adagio-empanada.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-empanada-route-read
+    hosts:
+    - adagio-empanada.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-empanada-route-update
+    hosts:
+    - adagio-empanada.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-empanada-route-list
+    hosts:
+    - adagio-empanada.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-enchilada
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-enchilada-route-create
+    hosts:
+    - adagio-enchilada.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-enchilada-route-read
+    hosts:
+    - adagio-enchilada.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-enchilada-route-update
+    hosts:
+    - adagio-enchilada.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-enchilada-route-list
+    hosts:
+    - adagio-enchilada.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-entree
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-entree-route-create
+    hosts:
+    - adagio-entree.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-entree-route-read
+    hosts:
+    - adagio-entree.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-entree-route-update
+    hosts:
+    - adagio-entree.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-entree-route-list
+    hosts:
+    - adagio-entree.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-filet
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-filet-route-create
+    hosts:
+    - adagio-filet.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-filet-route-read
+    hosts:
+    - adagio-filet.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-filet-route-update
+    hosts:
+    - adagio-filet.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-filet-route-list
+    hosts:
+    - adagio-filet.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-fish
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-fish-route-create
+    hosts:
+    - adagio-fish.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-fish-route-read
+    hosts:
+    - adagio-fish.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-fish-route-update
+    hosts:
+    - adagio-fish.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-fish-route-list
+    hosts:
+    - adagio-fish.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-flour
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-flour-route-create
+    hosts:
+    - adagio-flour.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-flour-route-read
+    hosts:
+    - adagio-flour.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-flour-route-update
+    hosts:
+    - adagio-flour.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-flour-route-list
+    hosts:
+    - adagio-flour.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-foie-gras
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-foie-gras-route-create
+    hosts:
+    - adagio-foie-gras.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-foie-gras-route-read
+    hosts:
+    - adagio-foie-gras.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-foie-gras-route-update
+    hosts:
+    - adagio-foie-gras.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-foie-gras-route-list
+    hosts:
+    - adagio-foie-gras.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-food
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-food-route-create
+    hosts:
+    - adagio-food.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-food-route-read
+    hosts:
+    - adagio-food.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-food-route-update
+    hosts:
+    - adagio-food.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-food-route-list
+    hosts:
+    - adagio-food.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-ginger
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-ginger-route-create
+    hosts:
+    - adagio-ginger.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-ginger-route-read
+    hosts:
+    - adagio-ginger.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-ginger-route-update
+    hosts:
+    - adagio-ginger.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-ginger-route-list
+    hosts:
+    - adagio-ginger.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-glaze
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-glaze-route-create
+    hosts:
+    - adagio-glaze.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-glaze-route-read
+    hosts:
+    - adagio-glaze.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-glaze-route-update
+    hosts:
+    - adagio-glaze.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-glaze-route-list
+    hosts:
+    - adagio-glaze.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-grill
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-grill-route-create
+    hosts:
+    - adagio-grill.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-grill-route-read
+    hosts:
+    - adagio-grill.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-grill-route-update
+    hosts:
+    - adagio-grill.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-grill-route-list
+    hosts:
+    - adagio-grill.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-hamburger
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-hamburger-route-create
+    hosts:
+    - adagio-hamburger.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-hamburger-route-read
+    hosts:
+    - adagio-hamburger.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-hamburger-route-update
+    hosts:
+    - adagio-hamburger.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-hamburger-route-list
+    hosts:
+    - adagio-hamburger.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-himalayan
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-himalayan-route-create
+    hosts:
+    - adagio-himalayan.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-himalayan-route-read
+    hosts:
+    - adagio-himalayan.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-himalayan-route-update
+    hosts:
+    - adagio-himalayan.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-himalayan-route-list
+    hosts:
+    - adagio-himalayan.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-ice
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-ice-route-create
+    hosts:
+    - adagio-ice.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-ice-route-read
+    hosts:
+    - adagio-ice.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-ice-route-update
+    hosts:
+    - adagio-ice.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-ice-route-list
+    hosts:
+    - adagio-ice.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-javanese
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-javanese-route-create
+    hosts:
+    - adagio-javanese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-javanese-route-read
+    hosts:
+    - adagio-javanese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-javanese-route-update
+    hosts:
+    - adagio-javanese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-javanese-route-list
+    hosts:
+    - adagio-javanese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-juice
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-juice-route-create
+    hosts:
+    - adagio-juice.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-juice-route-read
+    hosts:
+    - adagio-juice.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-juice-route-update
+    hosts:
+    - adagio-juice.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-juice-route-list
+    hosts:
+    - adagio-juice.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-ketchup
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-ketchup-route-create
+    hosts:
+    - adagio-ketchup.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-ketchup-route-read
+    hosts:
+    - adagio-ketchup.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-ketchup-route-update
+    hosts:
+    - adagio-ketchup.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-ketchup-route-list
+    hosts:
+    - adagio-ketchup.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-kitchen
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-kitchen-route-create
+    hosts:
+    - adagio-kitchen.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-kitchen-route-read
+    hosts:
+    - adagio-kitchen.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-kitchen-route-update
+    hosts:
+    - adagio-kitchen.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-kitchen-route-list
+    hosts:
+    - adagio-kitchen.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-korat
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-korat-route-create
+    hosts:
+    - adagio-korat.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-korat-route-read
+    hosts:
+    - adagio-korat.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-korat-route-update
+    hosts:
+    - adagio-korat.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-korat-route-list
+    hosts:
+    - adagio-korat.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-lard
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-lard-route-create
+    hosts:
+    - adagio-lard.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-lard-route-read
+    hosts:
+    - adagio-lard.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-lard-route-update
+    hosts:
+    - adagio-lard.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-lard-route-list
+    hosts:
+    - adagio-lard.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-liquor
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-liquor-route-create
+    hosts:
+    - adagio-liquor.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-liquor-route-read
+    hosts:
+    - adagio-liquor.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-liquor-route-update
+    hosts:
+    - adagio-liquor.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-liquor-route-list
+    hosts:
+    - adagio-liquor.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-longhair
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-longhair-route-create
+    hosts:
+    - adagio-longhair.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-longhair-route-read
+    hosts:
+    - adagio-longhair.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-longhair-route-update
+    hosts:
+    - adagio-longhair.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-longhair-route-list
+    hosts:
+    - adagio-longhair.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-margarine
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-margarine-route-create
+    hosts:
+    - adagio-margarine.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-margarine-route-read
+    hosts:
+    - adagio-margarine.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-margarine-route-update
+    hosts:
+    - adagio-margarine.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-margarine-route-list
+    hosts:
+    - adagio-margarine.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-marinade
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-marinade-route-create
+    hosts:
+    - adagio-marinade.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-marinade-route-read
+    hosts:
+    - adagio-marinade.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-marinade-route-update
+    hosts:
+    - adagio-marinade.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-marinade-route-list
+    hosts:
+    - adagio-marinade.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-marmalade
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-marmalade-route-create
+    hosts:
+    - adagio-marmalade.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-marmalade-route-read
+    hosts:
+    - adagio-marmalade.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-marmalade-route-update
+    hosts:
+    - adagio-marmalade.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-marmalade-route-list
+    hosts:
+    - adagio-marmalade.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-mayo
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-mayo-route-create
+    hosts:
+    - adagio-mayo.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-mayo-route-read
+    hosts:
+    - adagio-mayo.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mayo-route-update
+    hosts:
+    - adagio-mayo.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mayo-route-list
+    hosts:
+    - adagio-mayo.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-mayonnaise
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-mayonnaise-route-create
+    hosts:
+    - adagio-mayonnaise.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-mayonnaise-route-read
+    hosts:
+    - adagio-mayonnaise.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mayonnaise-route-update
+    hosts:
+    - adagio-mayonnaise.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mayonnaise-route-list
+    hosts:
+    - adagio-mayonnaise.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-meat
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-meat-route-create
+    hosts:
+    - adagio-meat.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-meat-route-read
+    hosts:
+    - adagio-meat.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-meat-route-update
+    hosts:
+    - adagio-meat.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-meat-route-list
+    hosts:
+    - adagio-meat.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-milk
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-milk-route-create
+    hosts:
+    - adagio-milk.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-milk-route-read
+    hosts:
+    - adagio-milk.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-milk-route-update
+    hosts:
+    - adagio-milk.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-milk-route-list
+    hosts:
+    - adagio-milk.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-mousse
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-mousse-route-create
+    hosts:
+    - adagio-mousse.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-mousse-route-read
+    hosts:
+    - adagio-mousse.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mousse-route-update
+    hosts:
+    - adagio-mousse.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mousse-route-list
+    hosts:
+    - adagio-mousse.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-muffin
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-muffin-route-create
+    hosts:
+    - adagio-muffin.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-muffin-route-read
+    hosts:
+    - adagio-muffin.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-muffin-route-update
+    hosts:
+    - adagio-muffin.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-muffin-route-list
+    hosts:
+    - adagio-muffin.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-mushroom
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-mushroom-route-create
+    hosts:
+    - adagio-mushroom.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-mushroom-route-read
+    hosts:
+    - adagio-mushroom.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mushroom-route-update
+    hosts:
+    - adagio-mushroom.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-mushroom-route-list
+    hosts:
+    - adagio-mushroom.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-noodle
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-noodle-route-create
+    hosts:
+    - adagio-noodle.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-noodle-route-read
+    hosts:
+    - adagio-noodle.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-noodle-route-update
+    hosts:
+    - adagio-noodle.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-noodle-route-list
+    hosts:
+    - adagio-noodle.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-nut
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-nut-route-create
+    hosts:
+    - adagio-nut.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-nut-route-read
+    hosts:
+    - adagio-nut.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-nut-route-update
+    hosts:
+    - adagio-nut.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-nut-route-list
+    hosts:
+    - adagio-nut.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-oil
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-oil-route-create
+    hosts:
+    - adagio-oil.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-oil-route-read
+    hosts:
+    - adagio-oil.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-oil-route-update
+    hosts:
+    - adagio-oil.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-oil-route-list
+    hosts:
+    - adagio-oil.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-olive
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-olive-route-create
+    hosts:
+    - adagio-olive.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-olive-route-read
+    hosts:
+    - adagio-olive.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-olive-route-update
+    hosts:
+    - adagio-olive.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-olive-route-list
+    hosts:
+    - adagio-olive.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-omelette
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-omelette-route-create
+    hosts:
+    - adagio-omelette.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-omelette-route-read
+    hosts:
+    - adagio-omelette.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-omelette-route-update
+    hosts:
+    - adagio-omelette.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-omelette-route-list
+    hosts:
+    - adagio-omelette.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-oriental
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-oriental-route-create
+    hosts:
+    - adagio-oriental.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-oriental-route-read
+    hosts:
+    - adagio-oriental.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-oriental-route-update
+    hosts:
+    - adagio-oriental.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-oriental-route-list
+    hosts:
+    - adagio-oriental.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pan
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pan-route-create
+    hosts:
+    - adagio-pan.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pan-route-read
+    hosts:
+    - adagio-pan.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pan-route-update
+    hosts:
+    - adagio-pan.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pan-route-list
+    hosts:
+    - adagio-pan.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pasta
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pasta-route-create
+    hosts:
+    - adagio-pasta.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pasta-route-read
+    hosts:
+    - adagio-pasta.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pasta-route-update
+    hosts:
+    - adagio-pasta.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pasta-route-list
+    hosts:
+    - adagio-pasta.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-paste
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-paste-route-create
+    hosts:
+    - adagio-paste.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-paste-route-read
+    hosts:
+    - adagio-paste.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-paste-route-update
+    hosts:
+    - adagio-paste.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-paste-route-list
+    hosts:
+    - adagio-paste.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pastry
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pastry-route-create
+    hosts:
+    - adagio-pastry.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pastry-route-read
+    hosts:
+    - adagio-pastry.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pastry-route-update
+    hosts:
+    - adagio-pastry.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pastry-route-list
+    hosts:
+    - adagio-pastry.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-persian
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-persian-route-create
+    hosts:
+    - adagio-persian.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-persian-route-read
+    hosts:
+    - adagio-persian.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-persian-route-update
+    hosts:
+    - adagio-persian.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-persian-route-list
+    hosts:
+    - adagio-persian.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pie
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pie-route-create
+    hosts:
+    - adagio-pie.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pie-route-read
+    hosts:
+    - adagio-pie.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pie-route-update
+    hosts:
+    - adagio-pie.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pie-route-list
+    hosts:
+    - adagio-pie.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pizza
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pizza-route-create
+    hosts:
+    - adagio-pizza.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pizza-route-read
+    hosts:
+    - adagio-pizza.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pizza-route-update
+    hosts:
+    - adagio-pizza.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pizza-route-list
+    hosts:
+    - adagio-pizza.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-plate
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-plate-route-create
+    hosts:
+    - adagio-plate.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-plate-route-read
+    hosts:
+    - adagio-plate.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-plate-route-update
+    hosts:
+    - adagio-plate.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-plate-route-list
+    hosts:
+    - adagio-plate.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pot
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pot-route-create
+    hosts:
+    - adagio-pot.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pot-route-read
+    hosts:
+    - adagio-pot.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pot-route-update
+    hosts:
+    - adagio-pot.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pot-route-list
+    hosts:
+    - adagio-pot.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-poutine
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-poutine-route-create
+    hosts:
+    - adagio-poutine.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-poutine-route-read
+    hosts:
+    - adagio-poutine.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-poutine-route-update
+    hosts:
+    - adagio-poutine.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-poutine-route-list
+    hosts:
+    - adagio-poutine.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-pudding
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-pudding-route-create
+    hosts:
+    - adagio-pudding.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-pudding-route-read
+    hosts:
+    - adagio-pudding.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pudding-route-update
+    hosts:
+    - adagio-pudding.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-pudding-route-list
+    hosts:
+    - adagio-pudding.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-queso
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-queso-route-create
+    hosts:
+    - adagio-queso.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-queso-route-read
+    hosts:
+    - adagio-queso.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-queso-route-update
+    hosts:
+    - adagio-queso.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-queso-route-list
+    hosts:
+    - adagio-queso.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-raclette
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-raclette-route-create
+    hosts:
+    - adagio-raclette.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-raclette-route-read
+    hosts:
+    - adagio-raclette.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-raclette-route-update
+    hosts:
+    - adagio-raclette.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-raclette-route-list
+    hosts:
+    - adagio-raclette.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-recipe
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-recipe-route-create
+    hosts:
+    - adagio-recipe.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-recipe-route-read
+    hosts:
+    - adagio-recipe.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-recipe-route-update
+    hosts:
+    - adagio-recipe.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-recipe-route-list
+    hosts:
+    - adagio-recipe.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-rice
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-rice-route-create
+    hosts:
+    - adagio-rice.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-rice-route-read
+    hosts:
+    - adagio-rice.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-rice-route-update
+    hosts:
+    - adagio-rice.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-rice-route-list
+    hosts:
+    - adagio-rice.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-salad
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-salad-route-create
+    hosts:
+    - adagio-salad.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-salad-route-read
+    hosts:
+    - adagio-salad.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-salad-route-update
+    hosts:
+    - adagio-salad.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-salad-route-list
+    hosts:
+    - adagio-salad.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-salsa
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-salsa-route-create
+    hosts:
+    - adagio-salsa.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-salsa-route-read
+    hosts:
+    - adagio-salsa.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-salsa-route-update
+    hosts:
+    - adagio-salsa.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-salsa-route-list
+    hosts:
+    - adagio-salsa.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-sandwich
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-sandwich-route-create
+    hosts:
+    - adagio-sandwich.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-sandwich-route-read
+    hosts:
+    - adagio-sandwich.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-sandwich-route-update
+    hosts:
+    - adagio-sandwich.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-sandwich-route-list
+    hosts:
+    - adagio-sandwich.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-sauce
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-sauce-route-create
+    hosts:
+    - adagio-sauce.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-sauce-route-read
+    hosts:
+    - adagio-sauce.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-sauce-route-update
+    hosts:
+    - adagio-sauce.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-sauce-route-list
+    hosts:
+    - adagio-sauce.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-seasoning
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-seasoning-route-create
+    hosts:
+    - adagio-seasoning.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-seasoning-route-read
+    hosts:
+    - adagio-seasoning.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-seasoning-route-update
+    hosts:
+    - adagio-seasoning.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-seasoning-route-list
+    hosts:
+    - adagio-seasoning.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET
+- name: adagio-siamese
+  url: http://httpgobin:8080
+  routes:
+  - name: adagio-siamese-route-create
+    hosts:
+    - adagio-siamese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - POST
+  - name: adagio-siamese-route-read
+    hosts:
+    - adagio-siamese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - GET
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-siamese-route-update
+    hosts:
+    - adagio-siamese.gateway.bank
+    paths:
+    - /anything/(?<resource>\w+)
+    strip_path: false
+    methods:
+    - PUT
+    plugins:
+    - name: jwt
+      config:
+        claims_to_verify:
+        - exp
+    - name: request-transformer
+      config:
+        replace:
+          uri: /anything/prefixed-$(uri_captures['resource'])
+  - name: adagio-siamese-route-list
+    hosts:
+    - adagio-siamese.gateway.bank
+    paths:
+    - /anything
+    strip_path: false
+    methods:
+    - GET

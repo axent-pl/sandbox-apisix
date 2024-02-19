@@ -8,16 +8,18 @@ KC_SECRET = 'rifb7zJJzE2RKStq74pEPMg29W5GkyIC'
 KC_USER = 'bank-app-user'
 KC_PASS = 'bankappuserpass'
 
-GW_ORIGIN = 'http://localhost:9080'
-GW_SERVICE_HOST = 'grandioso-himalayan.gateway.bank'
+GW1_ORIGIN = 'http://localhost:8000'
+GW2_ORIGIN = 'http://localhost:9081'
+GW_SERVICE_HOST = 'adagio-angora.gateway.bank' #'grandioso-himalayan.gateway.bank'
 GW_SERVICE_PATH = '/anything/of-foo'
 
 MS1_ORIGIN = 'http://localhost:2280'
 MS2_ORIGIN = 'http://localhost:3380'
 
 SERVICES = {
-    'gateway': GW_ORIGIN,
-    'httpgobin': MS2_ORIGIN
+    'kong': GW1_ORIGIN,
+    'apisix': GW2_ORIGIN,
+    'go-httpbin': MS2_ORIGIN
 }
 
 
@@ -46,11 +48,11 @@ def get_token():
         token_data = response.json()
         return "{} {}".format(token_data.get('token_type'), token_data.get('access_token'))
     else:
-        raise Exception('Invalid response')
+        raise Exception('Invalid token response')
 
 
-def call_endpoint(authorization):
-    url = f'{GW_ORIGIN}{GW_SERVICE_PATH}'
+def call_endpoint(endpoint,authorization):
+    url = f'{endpoint}{GW_SERVICE_PATH}'
     headers = {
         'host': GW_SERVICE_HOST,
         'Authorization': authorization
@@ -60,15 +62,18 @@ def call_endpoint(authorization):
     if response.status_code == 200:
         return response.json()
     else:
-        raise Exception('Invalid response')
+        raise Exception('Invalid gateway response')
 
 
 if __name__ == '__main__':
     authorization = get_token()
-    resp = call_endpoint(authorization=authorization)
-    # print(resp)
     reqs = []
     for service, url in SERVICES.items():
+        try:
+            resp = call_endpoint(endpoint=url, authorization=authorization)
+        except:
+            print(f'service {service} failed')
+            exit(1)
         reqs.append({
             'id': service,
             'url': f'{url}{GW_SERVICE_PATH}',

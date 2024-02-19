@@ -1,0 +1,51 @@
+routes:
+- name: {service_name}-route-create
+  hosts:
+  - {service_name}.gateway.bank
+  paths:
+  - /anything
+  strip_path: false
+  methods:
+    - POST
+- name: {service_name}-route-read
+  hosts:
+  - {service_name}.gateway.bank
+  paths:
+  - /anything/(?<resource>\w+)
+  strip_path: false
+  methods:
+    - GET
+  plugins:
+  - name: jwt
+    config:
+      claims_to_verify:
+        - exp
+  - name: request-transformer
+    config:
+      replace:
+        uri: /anything/prefixed-$(uri_captures['resource'])
+- name: {service_name}-route-update
+  hosts:
+  - {service_name}.gateway.bank
+  paths:
+  - /anything/(?<resource>\w+)
+  strip_path: false
+  methods:
+    - PUT
+  plugins:
+  - name: jwt
+    config:
+      claims_to_verify:
+        - exp
+  - name: request-transformer
+    config:
+      replace:
+        uri: /anything/prefixed-$(uri_captures['resource'])
+- name: {service_name}-route-list
+  hosts:
+  - {service_name}.gateway.bank
+  paths:
+  - /anything
+  strip_path: false
+  methods:
+    - GET

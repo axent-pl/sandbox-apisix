@@ -1,0 +1,14 @@
+global_rules:
+- id: 1
+  plugins:
+    tcp-logger:
+      _meta:
+        disable: false
+      batch_max_size: 1
+      host: apisix-etl
+      name: tcp logger
+      port: 1111
+      tls: false
+    prometheus:
+      _meta:
+        disable: false
