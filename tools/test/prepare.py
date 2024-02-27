@@ -9,7 +9,7 @@ KC_USER = 'bank-app-user'
 KC_PASS = 'bankappuserpass'
 
 GW1_ORIGIN = 'http://localhost:8000'
-GW2_ORIGIN = 'http://localhost:9081'
+GW2_ORIGIN = 'http://localhost:9080'
 GW_SERVICE_HOST = 'adagio-angora.gateway.bank' #'grandioso-himalayan.gateway.bank'
 GW_SERVICE_PATH = '/anything/of-foo'
 
@@ -31,6 +31,7 @@ def get_token():
         'username': KC_USER,
         'password': KC_PASS,
         'grant_type': 'password',
+        # 'grant_type': 'client_credentials',
         'client_id': KC_CLIENT,
         'client_secret': KC_SECRET
     }
@@ -48,6 +49,7 @@ def get_token():
         token_data = response.json()
         return "{} {}".format(token_data.get('token_type'), token_data.get('access_token'))
     else:
+        print(response.json())
         raise Exception('Invalid token response')
 
 
@@ -67,6 +69,8 @@ def call_endpoint(endpoint,authorization):
 
 if __name__ == '__main__':
     authorization = get_token()
+    print(authorization)
+    exit(0)
     reqs = []
     for service, url in SERVICES.items():
         try:

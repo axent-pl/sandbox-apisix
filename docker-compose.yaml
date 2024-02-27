@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   keycloak:
-    profiles: [ "idp" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
     platform: linux/x86_64
     build: 
       context: services/keycloak
@@ -33,7 +33,7 @@ services:
       - ax
 
   gateway-db:
-    profiles: [ "apisix" ]
+    profiles: [ "apisix-decoupled" ]
     image: bitnami/etcd:3.5.7
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
@@ -47,7 +47,7 @@ services:
       - ax
 
   gateway:
-    profiles: [ "apisix" ]
+    profiles: [ "apisix-decoupled" ]
     platform: linux/x86_64
     build:
       context: services/gateway
@@ -76,7 +76,7 @@ services:
       - ax
 
   gateway-dashboard:
-    profiles: [ "apisix" ]
+    profiles: [ "apisix-decoupled" ]
     platform: linux/x86_64
     build:
       context: services/gateway-dashboard
@@ -89,7 +89,7 @@ services:
       - ax
 
   httpgobin:
-    profiles: [ "apisix", "apisix-standalone", "kong", "kong-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
     build:
       context: services/microservice
     ports:
@@ -98,7 +98,7 @@ services:
       - ax
 
   grafana:
-    profiles: [ "monitoring", "logging" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
     build: 
       context: services/grafana
     ports:
@@ -110,7 +110,7 @@ services:
       - ax
 
   grafana-loki:
-    profiles: [ "monitoring", "logging" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
     build: 
       context: services/grafana-loki
     ports:
@@ -124,7 +124,7 @@ services:
       - ax
 
   prometheus:
-    profiles: [ "monitoring", "logging" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
     build:
       context: services/prometheus
     depends_on:
@@ -176,14 +176,14 @@ services:
       - ax
     
   apisix-etl:
-    profiles: [ "apisix", "apisix-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone" ]
     build:
       context: services/apisix-etl
     networks:
       - ax
 
   kong-etl:
-    profiles: [ "kong-standalone" ]
+    profiles: [ "kong-decoupled", "kong-standalone" ]
     build:
       context: services/kong-etl
     networks:

@@ -38,8 +38,6 @@ func main() {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(jsonResponse)
-
-		println(string(jsonResponse))
 	})
 
 	println("Server is listening on port 8080...")
