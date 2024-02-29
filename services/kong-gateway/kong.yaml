@@ -1,4 +1,4 @@
-_format_version: '2.1'
+_format_version: '3.0'
 _transform: true
 plugins:
 - name: tcp-log
@@ -17,6 +17,7 @@ consumers:
   custom_id: jwt-consumer-id
   jwt_secrets:
   - algorithm: RS256
+    secret: "secret"
     key: http://localhost:2380/auth/realms/bank
     rsa_public_key: '-----BEGIN PUBLIC KEY-----
 
@@ -39,7 +40,7 @@ services:
     hosts:
     - adagio-angora.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -56,7 +57,7 @@ services:
     hosts:
     - adagio-angora.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -92,7 +93,7 @@ services:
     hosts:
     - adagio-aroma.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -109,7 +110,7 @@ services:
     hosts:
     - adagio-aroma.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -145,7 +146,7 @@ services:
     hosts:
     - adagio-bagel.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -162,7 +163,7 @@ services:
     hosts:
     - adagio-bagel.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -198,7 +199,7 @@ services:
     hosts:
     - adagio-balinese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -215,7 +216,7 @@ services:
     hosts:
     - adagio-balinese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -251,7 +252,7 @@ services:
     hosts:
     - adagio-batter.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -268,7 +269,7 @@ services:
     hosts:
     - adagio-batter.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -304,7 +305,7 @@ services:
     hosts:
     - adagio-beans.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -321,7 +322,7 @@ services:
     hosts:
     - adagio-beans.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -357,7 +358,7 @@ services:
     hosts:
     - adagio-beer.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -374,7 +375,7 @@ services:
     hosts:
     - adagio-beer.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -410,7 +411,7 @@ services:
     hosts:
     - adagio-bengal.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -427,7 +428,7 @@ services:
     hosts:
     - adagio-bengal.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -463,7 +464,7 @@ services:
     hosts:
     - adagio-birman.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -480,7 +481,7 @@ services:
     hosts:
     - adagio-birman.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -516,7 +517,7 @@ services:
     hosts:
     - adagio-biscuit.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -533,7 +534,7 @@ services:
     hosts:
     - adagio-biscuit.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -569,7 +570,7 @@ services:
     hosts:
     - adagio-bobtail.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -586,7 +587,7 @@ services:
     hosts:
     - adagio-bobtail.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -622,7 +623,7 @@ services:
     hosts:
     - adagio-bombay.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -639,7 +640,7 @@ services:
     hosts:
     - adagio-bombay.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -675,7 +676,7 @@ services:
     hosts:
     - adagio-bread.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -692,7 +693,7 @@ services:
     hosts:
     - adagio-bread.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -728,7 +729,7 @@ services:
     hosts:
     - adagio-broth.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -745,7 +746,7 @@ services:
     hosts:
     - adagio-broth.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -781,7 +782,7 @@ services:
     hosts:
     - adagio-burger.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -798,7 +799,7 @@ services:
     hosts:
     - adagio-burger.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -834,7 +835,7 @@ services:
     hosts:
     - adagio-burmese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -851,7 +852,7 @@ services:
     hosts:
     - adagio-burmese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -887,7 +888,7 @@ services:
     hosts:
     - adagio-burrito.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -904,7 +905,7 @@ services:
     hosts:
     - adagio-burrito.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -940,7 +941,7 @@ services:
     hosts:
     - adagio-butter.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -957,7 +958,7 @@ services:
     hosts:
     - adagio-butter.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -993,7 +994,7 @@ services:
     hosts:
     - adagio-cake.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1010,7 +1011,7 @@ services:
     hosts:
     - adagio-cake.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1046,7 +1047,7 @@ services:
     hosts:
     - adagio-calico.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1063,7 +1064,7 @@ services:
     hosts:
     - adagio-calico.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1099,7 +1100,7 @@ services:
     hosts:
     - adagio-candy.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1116,7 +1117,7 @@ services:
     hosts:
     - adagio-candy.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1152,7 +1153,7 @@ services:
     hosts:
     - adagio-caramel.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1169,7 +1170,7 @@ services:
     hosts:
     - adagio-caramel.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1205,7 +1206,7 @@ services:
     hosts:
     - adagio-caviar.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1222,7 +1223,7 @@ services:
     hosts:
     - adagio-caviar.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1258,7 +1259,7 @@ services:
     hosts:
     - adagio-cheese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1275,7 +1276,7 @@ services:
     hosts:
     - adagio-cheese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1311,7 +1312,7 @@ services:
     hosts:
     - adagio-chili.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1328,7 +1329,7 @@ services:
     hosts:
     - adagio-chili.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1364,7 +1365,7 @@ services:
     hosts:
     - adagio-chimichanga.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1381,7 +1382,7 @@ services:
     hosts:
     - adagio-chimichanga.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1417,7 +1418,7 @@ services:
     hosts:
     - adagio-chocolate.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1434,7 +1435,7 @@ services:
     hosts:
     - adagio-chocolate.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1470,7 +1471,7 @@ services:
     hosts:
     - adagio-cider.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1487,7 +1488,7 @@ services:
     hosts:
     - adagio-cider.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1523,7 +1524,7 @@ services:
     hosts:
     - adagio-cobbler.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1540,7 +1541,7 @@ services:
     hosts:
     - adagio-cobbler.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1576,7 +1577,7 @@ services:
     hosts:
     - adagio-cocoa.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1593,7 +1594,7 @@ services:
     hosts:
     - adagio-cocoa.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1629,7 +1630,7 @@ services:
     hosts:
     - adagio-coffee.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1646,7 +1647,7 @@ services:
     hosts:
     - adagio-coffee.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1682,7 +1683,7 @@ services:
     hosts:
     - adagio-cookie.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1699,7 +1700,7 @@ services:
     hosts:
     - adagio-cookie.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1735,7 +1736,7 @@ services:
     hosts:
     - adagio-cream.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1752,7 +1753,7 @@ services:
     hosts:
     - adagio-cream.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1788,7 +1789,7 @@ services:
     hosts:
     - adagio-croissant.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1805,7 +1806,7 @@ services:
     hosts:
     - adagio-croissant.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1841,7 +1842,7 @@ services:
     hosts:
     - adagio-crumble.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1858,7 +1859,7 @@ services:
     hosts:
     - adagio-crumble.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1894,7 +1895,7 @@ services:
     hosts:
     - adagio-cuisine.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1911,7 +1912,7 @@ services:
     hosts:
     - adagio-cuisine.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -1947,7 +1948,7 @@ services:
     hosts:
     - adagio-curd.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -1964,7 +1965,7 @@ services:
     hosts:
     - adagio-curd.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2000,7 +2001,7 @@ services:
     hosts:
     - adagio-dessert.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2017,7 +2018,7 @@ services:
     hosts:
     - adagio-dessert.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2053,7 +2054,7 @@ services:
     hosts:
     - adagio-dish.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2070,7 +2071,7 @@ services:
     hosts:
     - adagio-dish.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2106,7 +2107,7 @@ services:
     hosts:
     - adagio-drink.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2123,7 +2124,7 @@ services:
     hosts:
     - adagio-drink.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2159,7 +2160,7 @@ services:
     hosts:
     - adagio-eggs.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2176,7 +2177,7 @@ services:
     hosts:
     - adagio-eggs.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2212,7 +2213,7 @@ services:
     hosts:
     - adagio-empanada.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2229,7 +2230,7 @@ services:
     hosts:
     - adagio-empanada.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2265,7 +2266,7 @@ services:
     hosts:
     - adagio-enchilada.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2282,7 +2283,7 @@ services:
     hosts:
     - adagio-enchilada.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2318,7 +2319,7 @@ services:
     hosts:
     - adagio-entree.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2335,7 +2336,7 @@ services:
     hosts:
     - adagio-entree.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2371,7 +2372,7 @@ services:
     hosts:
     - adagio-filet.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2388,7 +2389,7 @@ services:
     hosts:
     - adagio-filet.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2424,7 +2425,7 @@ services:
     hosts:
     - adagio-fish.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2441,7 +2442,7 @@ services:
     hosts:
     - adagio-fish.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2477,7 +2478,7 @@ services:
     hosts:
     - adagio-flour.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2494,7 +2495,7 @@ services:
     hosts:
     - adagio-flour.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2530,7 +2531,7 @@ services:
     hosts:
     - adagio-foie-gras.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2547,7 +2548,7 @@ services:
     hosts:
     - adagio-foie-gras.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2583,7 +2584,7 @@ services:
     hosts:
     - adagio-food.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2600,7 +2601,7 @@ services:
     hosts:
     - adagio-food.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2636,7 +2637,7 @@ services:
     hosts:
     - adagio-ginger.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2653,7 +2654,7 @@ services:
     hosts:
     - adagio-ginger.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2689,7 +2690,7 @@ services:
     hosts:
     - adagio-glaze.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2706,7 +2707,7 @@ services:
     hosts:
     - adagio-glaze.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2742,7 +2743,7 @@ services:
     hosts:
     - adagio-grill.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2759,7 +2760,7 @@ services:
     hosts:
     - adagio-grill.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2795,7 +2796,7 @@ services:
     hosts:
     - adagio-hamburger.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2812,7 +2813,7 @@ services:
     hosts:
     - adagio-hamburger.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2848,7 +2849,7 @@ services:
     hosts:
     - adagio-himalayan.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2865,7 +2866,7 @@ services:
     hosts:
     - adagio-himalayan.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2901,7 +2902,7 @@ services:
     hosts:
     - adagio-ice.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2918,7 +2919,7 @@ services:
     hosts:
     - adagio-ice.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -2954,7 +2955,7 @@ services:
     hosts:
     - adagio-javanese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -2971,7 +2972,7 @@ services:
     hosts:
     - adagio-javanese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3007,7 +3008,7 @@ services:
     hosts:
     - adagio-juice.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3024,7 +3025,7 @@ services:
     hosts:
     - adagio-juice.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3060,7 +3061,7 @@ services:
     hosts:
     - adagio-ketchup.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3077,7 +3078,7 @@ services:
     hosts:
     - adagio-ketchup.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3113,7 +3114,7 @@ services:
     hosts:
     - adagio-kitchen.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3130,7 +3131,7 @@ services:
     hosts:
     - adagio-kitchen.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3166,7 +3167,7 @@ services:
     hosts:
     - adagio-korat.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3183,7 +3184,7 @@ services:
     hosts:
     - adagio-korat.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3219,7 +3220,7 @@ services:
     hosts:
     - adagio-lard.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3236,7 +3237,7 @@ services:
     hosts:
     - adagio-lard.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3272,7 +3273,7 @@ services:
     hosts:
     - adagio-liquor.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3289,7 +3290,7 @@ services:
     hosts:
     - adagio-liquor.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3325,7 +3326,7 @@ services:
     hosts:
     - adagio-longhair.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3342,7 +3343,7 @@ services:
     hosts:
     - adagio-longhair.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3378,7 +3379,7 @@ services:
     hosts:
     - adagio-margarine.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3395,7 +3396,7 @@ services:
     hosts:
     - adagio-margarine.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3431,7 +3432,7 @@ services:
     hosts:
     - adagio-marinade.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3448,7 +3449,7 @@ services:
     hosts:
     - adagio-marinade.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3484,7 +3485,7 @@ services:
     hosts:
     - adagio-marmalade.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3501,7 +3502,7 @@ services:
     hosts:
     - adagio-marmalade.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3537,7 +3538,7 @@ services:
     hosts:
     - adagio-mayo.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3554,7 +3555,7 @@ services:
     hosts:
     - adagio-mayo.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3590,7 +3591,7 @@ services:
     hosts:
     - adagio-mayonnaise.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3607,7 +3608,7 @@ services:
     hosts:
     - adagio-mayonnaise.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3643,7 +3644,7 @@ services:
     hosts:
     - adagio-meat.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3660,7 +3661,7 @@ services:
     hosts:
     - adagio-meat.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3696,7 +3697,7 @@ services:
     hosts:
     - adagio-milk.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3713,7 +3714,7 @@ services:
     hosts:
     - adagio-milk.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3749,7 +3750,7 @@ services:
     hosts:
     - adagio-mousse.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3766,7 +3767,7 @@ services:
     hosts:
     - adagio-mousse.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3802,7 +3803,7 @@ services:
     hosts:
     - adagio-muffin.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3819,7 +3820,7 @@ services:
     hosts:
     - adagio-muffin.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3855,7 +3856,7 @@ services:
     hosts:
     - adagio-mushroom.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3872,7 +3873,7 @@ services:
     hosts:
     - adagio-mushroom.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3908,7 +3909,7 @@ services:
     hosts:
     - adagio-noodle.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3925,7 +3926,7 @@ services:
     hosts:
     - adagio-noodle.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -3961,7 +3962,7 @@ services:
     hosts:
     - adagio-nut.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -3978,7 +3979,7 @@ services:
     hosts:
     - adagio-nut.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4014,7 +4015,7 @@ services:
     hosts:
     - adagio-oil.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4031,7 +4032,7 @@ services:
     hosts:
     - adagio-oil.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4067,7 +4068,7 @@ services:
     hosts:
     - adagio-olive.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4084,7 +4085,7 @@ services:
     hosts:
     - adagio-olive.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4120,7 +4121,7 @@ services:
     hosts:
     - adagio-omelette.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4137,7 +4138,7 @@ services:
     hosts:
     - adagio-omelette.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4173,7 +4174,7 @@ services:
     hosts:
     - adagio-oriental.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4190,7 +4191,7 @@ services:
     hosts:
     - adagio-oriental.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4226,7 +4227,7 @@ services:
     hosts:
     - adagio-pan.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4243,7 +4244,7 @@ services:
     hosts:
     - adagio-pan.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4279,7 +4280,7 @@ services:
     hosts:
     - adagio-pasta.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4296,7 +4297,7 @@ services:
     hosts:
     - adagio-pasta.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4332,7 +4333,7 @@ services:
     hosts:
     - adagio-paste.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4349,7 +4350,7 @@ services:
     hosts:
     - adagio-paste.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4385,7 +4386,7 @@ services:
     hosts:
     - adagio-pastry.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4402,7 +4403,7 @@ services:
     hosts:
     - adagio-pastry.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4438,7 +4439,7 @@ services:
     hosts:
     - adagio-persian.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4455,7 +4456,7 @@ services:
     hosts:
     - adagio-persian.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4491,7 +4492,7 @@ services:
     hosts:
     - adagio-pie.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4508,7 +4509,7 @@ services:
     hosts:
     - adagio-pie.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4544,7 +4545,7 @@ services:
     hosts:
     - adagio-pizza.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4561,7 +4562,7 @@ services:
     hosts:
     - adagio-pizza.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4597,7 +4598,7 @@ services:
     hosts:
     - adagio-plate.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4614,7 +4615,7 @@ services:
     hosts:
     - adagio-plate.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4650,7 +4651,7 @@ services:
     hosts:
     - adagio-pot.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4667,7 +4668,7 @@ services:
     hosts:
     - adagio-pot.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4703,7 +4704,7 @@ services:
     hosts:
     - adagio-poutine.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4720,7 +4721,7 @@ services:
     hosts:
     - adagio-poutine.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4756,7 +4757,7 @@ services:
     hosts:
     - adagio-pudding.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4773,7 +4774,7 @@ services:
     hosts:
     - adagio-pudding.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4809,7 +4810,7 @@ services:
     hosts:
     - adagio-queso.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4826,7 +4827,7 @@ services:
     hosts:
     - adagio-queso.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4862,7 +4863,7 @@ services:
     hosts:
     - adagio-raclette.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4879,7 +4880,7 @@ services:
     hosts:
     - adagio-raclette.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4915,7 +4916,7 @@ services:
     hosts:
     - adagio-recipe.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4932,7 +4933,7 @@ services:
     hosts:
     - adagio-recipe.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -4968,7 +4969,7 @@ services:
     hosts:
     - adagio-rice.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -4985,7 +4986,7 @@ services:
     hosts:
     - adagio-rice.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -5021,7 +5022,7 @@ services:
     hosts:
     - adagio-salad.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -5038,7 +5039,7 @@ services:
     hosts:
     - adagio-salad.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -5074,7 +5075,7 @@ services:
     hosts:
     - adagio-salsa.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -5091,7 +5092,7 @@ services:
     hosts:
     - adagio-salsa.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -5127,7 +5128,7 @@ services:
     hosts:
     - adagio-sandwich.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -5144,7 +5145,7 @@ services:
     hosts:
     - adagio-sandwich.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -5180,7 +5181,7 @@ services:
     hosts:
     - adagio-sauce.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -5197,7 +5198,7 @@ services:
     hosts:
     - adagio-sauce.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -5233,7 +5234,7 @@ services:
     hosts:
     - adagio-seasoning.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -5250,7 +5251,7 @@ services:
     hosts:
     - adagio-seasoning.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT
@@ -5286,7 +5287,7 @@ services:
     hosts:
     - adagio-siamese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - GET
@@ -5303,7 +5304,7 @@ services:
     hosts:
     - adagio-siamese.gateway.bank
     paths:
-    - /anything/(?<resource>\w+)
+    - ~/anything/(?<resource>\w+)
     strip_path: false
     methods:
     - PUT

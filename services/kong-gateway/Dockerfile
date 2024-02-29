@@ -7,5 +7,7 @@ RUN apt update && \
     tar -xf deck.tar.gz -C /tmp && \
     mv /tmp/deck /usr/local/bin/
 
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
 USER kong
 COPY kong.yaml /opt/kong/kong.yaml
