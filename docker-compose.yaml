@@ -1,5 +1,7 @@
 version: '3.4'
 
+name: apigw
+
 services:
   keycloak:
     profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
@@ -19,6 +21,8 @@ services:
     networks:
       - ax
 
+  ################################################################
+
   apisix-gateway:
     profiles: [ "apisix-standalone" ]
     platform: linux/x86_64
@@ -32,12 +36,12 @@ services:
     networks:
       - ax
 
-  gateway-db:
+  apisix-db:
     profiles: [ "apisix-decoupled" ]
     image: bitnami/etcd:3.5.7
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
-      - ETCD_ADVERTISE_CLIENT_URLS=http://gateway-db:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://apisix-db:2379
     healthcheck:
       test: ["CMD", "etcdctl", "endpoint", "health"]
       interval: 5s
@@ -46,24 +50,17 @@ services:
     networks:
       - ax
 
-  gateway:
+  apisix-gateway-decoupled:
     profiles: [ "apisix-decoupled" ]
     platform: linux/x86_64
     build:
       context: services/gateway
     environment:
-      - APISIX_DEPLOYMENT_ETCD_HOST=["http://gateway-db:2379"]
-      - BANK_APP_HOST=httpgobin
-      - BANK_APP_PORT=8080
+      - APISIX_DEPLOYMENT_ETCD_HOST=["http://apisix-db:2379"]
     ports:
-      - 2290:9000
       - 9080:9080
-      - 9180:9180
-      - 9443:9443
-      - 9090:9092
-      - 9100:9100
     depends_on:
-      gateway-db:
+      apisix-db:
         condition: service_healthy
       grafana-loki:
         condition: service_healthy
@@ -75,18 +72,29 @@ services:
     networks:
       - ax
 
-  gateway-dashboard:
+  apisix-dashboard:
     profiles: [ "apisix-decoupled" ]
     platform: linux/x86_64
     build:
       context: services/gateway-dashboard
+    environment:
+      - APISIX_DEPLOYMENT_ETCD_HOST=["http://apisix-db:2379"]
     ports:
       - 9000:9000
     depends_on:
-      gateway-db:
+      apisix-db:
         condition: service_healthy
     networks:
       - ax
+
+  apisix-etl:
+    profiles: [ "apisix-decoupled", "apisix-standalone" ]
+    build:
+      context: services/apisix-etl
+    networks:
+      - ax
+
+  ################################################################
 
   httpgobin:
     profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
@@ -96,6 +104,8 @@ services:
       - 3380:8080
     networks:
       - ax
+
+  ################################################################
 
   grafana:
     profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
@@ -127,11 +137,10 @@ services:
     profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
     build:
       context: services/prometheus
-    depends_on:
-      gateway:
-        condition: service_healthy
     networks:
       - ax
+
+  ################################################################
 
   kong-db:
     image: postgres:9.5
@@ -150,9 +159,10 @@ services:
       - ax
 
   kong-migrations:
-    image: kong:3.5.0
-    command: kong migrations bootstrap
     profiles: [ "kong-decoupled" ]
+    build:
+      context: services/kong-gateway
+    command: kong migrations bootstrap
     depends_on:
       kong-db:
         condition: service_healthy
@@ -167,9 +177,10 @@ services:
     restart: on-failure
 
   kong-migrations-up:
-    image: kong:3.5.0
-    command: kong migrations up && kong migrations finish
     profiles: [ "kong-decoupled" ]
+    build:
+      context: services/kong-gateway
+    command: kong migrations up && kong migrations finish
     depends_on:
       kong-db:
         condition: service_healthy
@@ -239,13 +250,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 10
-    networks:
-      - ax
-    
-  apisix-etl:
-    profiles: [ "apisix-decoupled", "apisix-standalone" ]
-    build:
-      context: services/apisix-etl
     networks:
       - ax
 
