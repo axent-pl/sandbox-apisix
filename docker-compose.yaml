@@ -27,7 +27,7 @@ services:
     profiles: [ "apisix-standalone" ]
     platform: linux/x86_64
     build:
-      context: services/apisix-gateway
+      context: services/apisix-gateway-standalone
     ports:
       - 9081:9080
     depends_on:
@@ -54,7 +54,7 @@ services:
     profiles: [ "apisix-decoupled" ]
     platform: linux/x86_64
     build:
-      context: services/gateway
+      context: services/apisix-gateway-decoupled
     environment:
       - APISIX_DEPLOYMENT_ETCD_HOST=["http://apisix-db:2379"]
     ports:
@@ -76,7 +76,7 @@ services:
     profiles: [ "apisix-decoupled" ]
     platform: linux/x86_64
     build:
-      context: services/gateway-dashboard
+      context: services/apisix-dashboard
     environment:
       - APISIX_DEPLOYMENT_ETCD_HOST=["http://apisix-db:2379"]
     ports:
