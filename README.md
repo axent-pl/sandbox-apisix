@@ -25,8 +25,24 @@ docker-compose --profile kong-decoupled
 
 - [Grafana](http://localhost:3000)
 
-- [APISIX standalone API](http://localhost:9081)
+- APISIX standalone
 
-- [APISIX decoupled API](http://localhost:9080)
+    - [APISIX standalone API](http://localhost:9081)
 
-- [APISIX decoupled GUI](http://localhost:9000)
+- APISIX decoupled
+
+    - [APISIX decoupled API](http://localhost:9080)
+
+    - [APISIX decoupled GUI](http://localhost:9000)
+
+- Kong standalone
+
+    - [Kong standalone API](http://localhost:8000)
+
+    - [Kong standalone GUI](http://localhost:8002)
+
+- Kong decoupled
+
+    - [Kong decoupled API](http://localhost:8100)
+
+    - [Kong decoupled GUI](http://localhost:8102)
