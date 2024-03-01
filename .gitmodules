@@ -1,0 +1,3 @@
+[submodule "services/httpster/code"]
+	path = services/httpster/code
+	url = git@github.com:axent-pl/httpster.git
