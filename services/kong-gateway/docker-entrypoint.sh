@@ -2,6 +2,13 @@
 set -Eeo pipefail
 
 # added {{{
+echo "$(sed 's/${KC_HOST}/'$KC_HOST'/g' /opt/kong/kong.yaml)" > /opt/kong/kong.yaml
+echo "$(sed 's/${KC_PORT}/'$KC_PORT'/g' /opt/kong/kong.yaml)" > /opt/kong/kong.yaml
+echo "$(sed 's/${ETL_KG_HOST}/'$ETL_KG_HOST'/g' /opt/kong/kong.yaml)" > /opt/kong/kong.yaml
+echo "$(sed 's/${ETL_KG_PORT}/'$ETL_KG_PORT'/g' /opt/kong/kong.yaml)" > /opt/kong/kong.yaml
+echo "$(sed 's/${UPSTREAM_HOST}/'$UPSTREAM_HOST'/g' /opt/kong/kong.yaml)" > /opt/kong/kong.yaml
+echo "$(sed 's/${UPSTREAM_PORT}/'$UPSTREAM_PORT'/g' /opt/kong/kong.yaml)" > /opt/kong/kong.yaml
+
 load_config() {
   SECONDS=0
   echo "[INFO ][axent-pl]: startup started"

@@ -10,6 +10,7 @@ KC_PASS = 'bankappuserpass'
 
 GW_A6SA_ORIGIN = 'http://localhost:9081'
 GW_A6DC_ORIGIN = 'http://localhost:9080'
+GW_KGSA_ORIGIN = 'http://localhost:8000'
 
 GW_SERVICE_HOST = 'adagio-angora.gateway.bank'
 GW_SERVICE_PATH = '/anything/of-foo'
@@ -19,7 +20,7 @@ MS_ORIGIN = 'http://localhost:3380'
 SERVICES = {
     'apisix': GW_A6SA_ORIGIN,
     'apisix-decoupled': GW_A6DC_ORIGIN,
-    # 'kong': GW2_ORIGIN,
+    'kong': GW_KGSA_ORIGIN,
     'go-httpbin': MS_ORIGIN
 }
 

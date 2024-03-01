@@ -10,4 +10,4 @@ RUN apt update && \
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 USER kong
-COPY kong.yaml /opt/kong/kong.yaml
+COPY --chown=kong:kong kong.yaml /opt/kong/kong.yaml

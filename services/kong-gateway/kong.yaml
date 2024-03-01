@@ -3,8 +3,8 @@ _transform: true
 plugins:
 - name: tcp-log
   config:
-    host: kong-etl
-    port: 1111
+    host: ${ETL_KG_HOST}
+    port: ${ETL_KG_PORT}
 - name: prometheus
   config:
     latency_metrics: true
@@ -17,16 +17,14 @@ consumers:
   custom_id: jwt-consumer-id
   jwt_secrets:
   - algorithm: RS256
-    secret: "secret"
-    key: http://localhost:2380/auth/realms/bank
-    rsa_public_key: '-----BEGIN PUBLIC KEY-----
-
+    key: http://${KC_HOST}:${KC_PORT}/auth/realms/bank
+    rsa_public_key: |-
+      -----BEGIN PUBLIC KEY-----
       MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqi32ruIMLgsLhePY2lqRBo+1YnNrE7NyE827lWyEgH1zfI+WKktlH9rOiSt4wZOgHVCg9B0QNSipXkqfV9HxfSBi6KIkkxtpAErFGbhK4vTYooKNDgkCZ0A6U7jqW1l2HtzxHm5UyVnedW/lmqJmX2D4XMkWlX6FmoAXkOa9Si+qwGJTaDhVHx7B4OfmsNPIcia20ujrzoha6c1L4Na2bxt9XyQPt1M873brHgKqN7qc2VCFS212qb3PwBRjl8WA4M7UoWxMkyZAoHbLjdZksZJ1vE4pASfNo0rRo0awLNSE7pjy/9pdoJ4rSKw1s4Ww6E7FEUVSvMoffVnaEuQv6uZOmK1B6ixkaER0NYzlubHUIZhwO9fQHwTgYv9YUoD9X2O9WZDB2+DlkazToem+wO7nJ562o8zXGi4zGEm9lP54mA5tyyJqbmOoAA4bZpWaphiMxx07vwULlRMFapIwbRbMsHnjBbe0VkRl21dyqbIW8yracSql0YhKohnovEDhh6McuPuGqsxAsrjR5V7KBDF6Xp37f//JSKNhym1jVf7F6Mi6bYhy2eIF9CKrYRC5aFWg0f08sMiGiepsBWeo16hocI2Ec0kMZPKDGoA+OpSIy77ZZUO8zGVYk7Uqup7vnQfCS/oREGsLwOYG879ajqlguNFNC4ZIP0HCrnC7bb8CAwEAAQ==
-
-      -----END PUBLIC KEY-----'
+      -----END PUBLIC KEY-----
 services:
 - name: adagio-angora
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-angora-route-create
     hosts:
@@ -79,7 +77,7 @@ services:
     methods:
     - GET
 - name: adagio-aroma
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-aroma-route-create
     hosts:
@@ -132,7 +130,7 @@ services:
     methods:
     - GET
 - name: adagio-bagel
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-bagel-route-create
     hosts:
@@ -185,7 +183,7 @@ services:
     methods:
     - GET
 - name: adagio-balinese
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-balinese-route-create
     hosts:
@@ -238,7 +236,7 @@ services:
     methods:
     - GET
 - name: adagio-batter
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-batter-route-create
     hosts:
@@ -291,7 +289,7 @@ services:
     methods:
     - GET
 - name: adagio-beans
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-beans-route-create
     hosts:
@@ -344,7 +342,7 @@ services:
     methods:
     - GET
 - name: adagio-beer
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-beer-route-create
     hosts:
@@ -397,7 +395,7 @@ services:
     methods:
     - GET
 - name: adagio-bengal
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-bengal-route-create
     hosts:
@@ -450,7 +448,7 @@ services:
     methods:
     - GET
 - name: adagio-birman
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-birman-route-create
     hosts:
@@ -503,7 +501,7 @@ services:
     methods:
     - GET
 - name: adagio-biscuit
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-biscuit-route-create
     hosts:
@@ -556,7 +554,7 @@ services:
     methods:
     - GET
 - name: adagio-bobtail
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-bobtail-route-create
     hosts:
@@ -609,7 +607,7 @@ services:
     methods:
     - GET
 - name: adagio-bombay
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-bombay-route-create
     hosts:
@@ -662,7 +660,7 @@ services:
     methods:
     - GET
 - name: adagio-bread
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-bread-route-create
     hosts:
@@ -715,7 +713,7 @@ services:
     methods:
     - GET
 - name: adagio-broth
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-broth-route-create
     hosts:
@@ -768,7 +766,7 @@ services:
     methods:
     - GET
 - name: adagio-burger
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-burger-route-create
     hosts:
@@ -821,7 +819,7 @@ services:
     methods:
     - GET
 - name: adagio-burmese
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-burmese-route-create
     hosts:
@@ -874,7 +872,7 @@ services:
     methods:
     - GET
 - name: adagio-burrito
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-burrito-route-create
     hosts:
@@ -927,7 +925,7 @@ services:
     methods:
     - GET
 - name: adagio-butter
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-butter-route-create
     hosts:
@@ -980,7 +978,7 @@ services:
     methods:
     - GET
 - name: adagio-cake
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cake-route-create
     hosts:
@@ -1033,7 +1031,7 @@ services:
     methods:
     - GET
 - name: adagio-calico
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-calico-route-create
     hosts:
@@ -1086,7 +1084,7 @@ services:
     methods:
     - GET
 - name: adagio-candy
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-candy-route-create
     hosts:
@@ -1139,7 +1137,7 @@ services:
     methods:
     - GET
 - name: adagio-caramel
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-caramel-route-create
     hosts:
@@ -1192,7 +1190,7 @@ services:
     methods:
     - GET
 - name: adagio-caviar
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-caviar-route-create
     hosts:
@@ -1245,7 +1243,7 @@ services:
     methods:
     - GET
 - name: adagio-cheese
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cheese-route-create
     hosts:
@@ -1298,7 +1296,7 @@ services:
     methods:
     - GET
 - name: adagio-chili
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-chili-route-create
     hosts:
@@ -1351,7 +1349,7 @@ services:
     methods:
     - GET
 - name: adagio-chimichanga
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-chimichanga-route-create
     hosts:
@@ -1404,7 +1402,7 @@ services:
     methods:
     - GET
 - name: adagio-chocolate
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-chocolate-route-create
     hosts:
@@ -1457,7 +1455,7 @@ services:
     methods:
     - GET
 - name: adagio-cider
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cider-route-create
     hosts:
@@ -1510,7 +1508,7 @@ services:
     methods:
     - GET
 - name: adagio-cobbler
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cobbler-route-create
     hosts:
@@ -1563,7 +1561,7 @@ services:
     methods:
     - GET
 - name: adagio-cocoa
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cocoa-route-create
     hosts:
@@ -1616,7 +1614,7 @@ services:
     methods:
     - GET
 - name: adagio-coffee
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-coffee-route-create
     hosts:
@@ -1669,7 +1667,7 @@ services:
     methods:
     - GET
 - name: adagio-cookie
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cookie-route-create
     hosts:
@@ -1722,7 +1720,7 @@ services:
     methods:
     - GET
 - name: adagio-cream
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cream-route-create
     hosts:
@@ -1775,7 +1773,7 @@ services:
     methods:
     - GET
 - name: adagio-croissant
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-croissant-route-create
     hosts:
@@ -1828,7 +1826,7 @@ services:
     methods:
     - GET
 - name: adagio-crumble
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-crumble-route-create
     hosts:
@@ -1881,7 +1879,7 @@ services:
     methods:
     - GET
 - name: adagio-cuisine
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-cuisine-route-create
     hosts:
@@ -1934,7 +1932,7 @@ services:
     methods:
     - GET
 - name: adagio-curd
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-curd-route-create
     hosts:
@@ -1987,7 +1985,7 @@ services:
     methods:
     - GET
 - name: adagio-dessert
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-dessert-route-create
     hosts:
@@ -2040,7 +2038,7 @@ services:
     methods:
     - GET
 - name: adagio-dish
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-dish-route-create
     hosts:
@@ -2093,7 +2091,7 @@ services:
     methods:
     - GET
 - name: adagio-drink
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-drink-route-create
     hosts:
@@ -2146,7 +2144,7 @@ services:
     methods:
     - GET
 - name: adagio-eggs
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-eggs-route-create
     hosts:
@@ -2199,7 +2197,7 @@ services:
     methods:
     - GET
 - name: adagio-empanada
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-empanada-route-create
     hosts:
@@ -2252,7 +2250,7 @@ services:
     methods:
     - GET
 - name: adagio-enchilada
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-enchilada-route-create
     hosts:
@@ -2305,7 +2303,7 @@ services:
     methods:
     - GET
 - name: adagio-entree
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-entree-route-create
     hosts:
@@ -2358,7 +2356,7 @@ services:
     methods:
     - GET
 - name: adagio-filet
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-filet-route-create
     hosts:
@@ -2411,7 +2409,7 @@ services:
     methods:
     - GET
 - name: adagio-fish
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-fish-route-create
     hosts:
@@ -2464,7 +2462,7 @@ services:
     methods:
     - GET
 - name: adagio-flour
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-flour-route-create
     hosts:
@@ -2517,7 +2515,7 @@ services:
     methods:
     - GET
 - name: adagio-foie-gras
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-foie-gras-route-create
     hosts:
@@ -2570,7 +2568,7 @@ services:
     methods:
     - GET
 - name: adagio-food
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-food-route-create
     hosts:
@@ -2623,7 +2621,7 @@ services:
     methods:
     - GET
 - name: adagio-ginger
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-ginger-route-create
     hosts:
@@ -2676,7 +2674,7 @@ services:
     methods:
     - GET
 - name: adagio-glaze
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-glaze-route-create
     hosts:
@@ -2729,7 +2727,7 @@ services:
     methods:
     - GET
 - name: adagio-grill
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-grill-route-create
     hosts:
@@ -2782,7 +2780,7 @@ services:
     methods:
     - GET
 - name: adagio-hamburger
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-hamburger-route-create
     hosts:
@@ -2835,7 +2833,7 @@ services:
     methods:
     - GET
 - name: adagio-himalayan
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-himalayan-route-create
     hosts:
@@ -2888,7 +2886,7 @@ services:
     methods:
     - GET
 - name: adagio-ice
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-ice-route-create
     hosts:
@@ -2941,7 +2939,7 @@ services:
     methods:
     - GET
 - name: adagio-javanese
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-javanese-route-create
     hosts:
@@ -2994,7 +2992,7 @@ services:
     methods:
     - GET
 - name: adagio-juice
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-juice-route-create
     hosts:
@@ -3047,7 +3045,7 @@ services:
     methods:
     - GET
 - name: adagio-ketchup
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-ketchup-route-create
     hosts:
@@ -3100,7 +3098,7 @@ services:
     methods:
     - GET
 - name: adagio-kitchen
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-kitchen-route-create
     hosts:
@@ -3153,7 +3151,7 @@ services:
     methods:
     - GET
 - name: adagio-korat
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-korat-route-create
     hosts:
@@ -3206,7 +3204,7 @@ services:
     methods:
     - GET
 - name: adagio-lard
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-lard-route-create
     hosts:
@@ -3259,7 +3257,7 @@ services:
     methods:
     - GET
 - name: adagio-liquor
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-liquor-route-create
     hosts:
@@ -3312,7 +3310,7 @@ services:
     methods:
     - GET
 - name: adagio-longhair
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-longhair-route-create
     hosts:
@@ -3365,7 +3363,7 @@ services:
     methods:
     - GET
 - name: adagio-margarine
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-margarine-route-create
     hosts:
@@ -3418,7 +3416,7 @@ services:
     methods:
     - GET
 - name: adagio-marinade
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-marinade-route-create
     hosts:
@@ -3471,7 +3469,7 @@ services:
     methods:
     - GET
 - name: adagio-marmalade
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-marmalade-route-create
     hosts:
@@ -3524,7 +3522,7 @@ services:
     methods:
     - GET
 - name: adagio-mayo
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-mayo-route-create
     hosts:
@@ -3577,7 +3575,7 @@ services:
     methods:
     - GET
 - name: adagio-mayonnaise
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-mayonnaise-route-create
     hosts:
@@ -3630,7 +3628,7 @@ services:
     methods:
     - GET
 - name: adagio-meat
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-meat-route-create
     hosts:
@@ -3683,7 +3681,7 @@ services:
     methods:
     - GET
 - name: adagio-milk
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-milk-route-create
     hosts:
@@ -3736,7 +3734,7 @@ services:
     methods:
     - GET
 - name: adagio-mousse
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-mousse-route-create
     hosts:
@@ -3789,7 +3787,7 @@ services:
     methods:
     - GET
 - name: adagio-muffin
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-muffin-route-create
     hosts:
@@ -3842,7 +3840,7 @@ services:
     methods:
     - GET
 - name: adagio-mushroom
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-mushroom-route-create
     hosts:
@@ -3895,7 +3893,7 @@ services:
     methods:
     - GET
 - name: adagio-noodle
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-noodle-route-create
     hosts:
@@ -3948,7 +3946,7 @@ services:
     methods:
     - GET
 - name: adagio-nut
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-nut-route-create
     hosts:
@@ -4001,7 +3999,7 @@ services:
     methods:
     - GET
 - name: adagio-oil
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-oil-route-create
     hosts:
@@ -4054,7 +4052,7 @@ services:
     methods:
     - GET
 - name: adagio-olive
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-olive-route-create
     hosts:
@@ -4107,7 +4105,7 @@ services:
     methods:
     - GET
 - name: adagio-omelette
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-omelette-route-create
     hosts:
@@ -4160,7 +4158,7 @@ services:
     methods:
     - GET
 - name: adagio-oriental
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-oriental-route-create
     hosts:
@@ -4213,7 +4211,7 @@ services:
     methods:
     - GET
 - name: adagio-pan
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pan-route-create
     hosts:
@@ -4266,7 +4264,7 @@ services:
     methods:
     - GET
 - name: adagio-pasta
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pasta-route-create
     hosts:
@@ -4319,7 +4317,7 @@ services:
     methods:
     - GET
 - name: adagio-paste
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-paste-route-create
     hosts:
@@ -4372,7 +4370,7 @@ services:
     methods:
     - GET
 - name: adagio-pastry
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pastry-route-create
     hosts:
@@ -4425,7 +4423,7 @@ services:
     methods:
     - GET
 - name: adagio-persian
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-persian-route-create
     hosts:
@@ -4478,7 +4476,7 @@ services:
     methods:
     - GET
 - name: adagio-pie
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pie-route-create
     hosts:
@@ -4531,7 +4529,7 @@ services:
     methods:
     - GET
 - name: adagio-pizza
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pizza-route-create
     hosts:
@@ -4584,7 +4582,7 @@ services:
     methods:
     - GET
 - name: adagio-plate
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-plate-route-create
     hosts:
@@ -4637,7 +4635,7 @@ services:
     methods:
     - GET
 - name: adagio-pot
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pot-route-create
     hosts:
@@ -4690,7 +4688,7 @@ services:
     methods:
     - GET
 - name: adagio-poutine
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-poutine-route-create
     hosts:
@@ -4743,7 +4741,7 @@ services:
     methods:
     - GET
 - name: adagio-pudding
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-pudding-route-create
     hosts:
@@ -4796,7 +4794,7 @@ services:
     methods:
     - GET
 - name: adagio-queso
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-queso-route-create
     hosts:
@@ -4849,7 +4847,7 @@ services:
     methods:
     - GET
 - name: adagio-raclette
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-raclette-route-create
     hosts:
@@ -4902,7 +4900,7 @@ services:
     methods:
     - GET
 - name: adagio-recipe
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-recipe-route-create
     hosts:
@@ -4955,7 +4953,7 @@ services:
     methods:
     - GET
 - name: adagio-rice
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-rice-route-create
     hosts:
@@ -5008,7 +5006,7 @@ services:
     methods:
     - GET
 - name: adagio-salad
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-salad-route-create
     hosts:
@@ -5061,7 +5059,7 @@ services:
     methods:
     - GET
 - name: adagio-salsa
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-salsa-route-create
     hosts:
@@ -5114,7 +5112,7 @@ services:
     methods:
     - GET
 - name: adagio-sandwich
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-sandwich-route-create
     hosts:
@@ -5167,7 +5165,7 @@ services:
     methods:
     - GET
 - name: adagio-sauce
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-sauce-route-create
     hosts:
@@ -5220,7 +5218,7 @@ services:
     methods:
     - GET
 - name: adagio-seasoning
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-seasoning-route-create
     hosts:
@@ -5273,7 +5271,7 @@ services:
     methods:
     - GET
 - name: adagio-siamese
-  url: http://httpgobin:8080
+  url: http://${UPSTREAM_HOST}:${UPSTREAM_PORT}
   routes:
   - name: adagio-siamese-route-create
     hosts:

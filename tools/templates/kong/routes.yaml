@@ -11,7 +11,7 @@ routes:
   hosts:
   - {service_name}.gateway.bank
   paths:
-  - /anything/(?<resource>\w+)
+  - ~/anything/(?<resource>\w+)
   strip_path: false
   methods:
     - GET
@@ -28,7 +28,7 @@ routes:
   hosts:
   - {service_name}.gateway.bank
   paths:
-  - /anything/(?<resource>\w+)
+  - ~/anything/(?<resource>\w+)
   strip_path: false
   methods:
     - PUT

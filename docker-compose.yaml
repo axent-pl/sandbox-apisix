@@ -228,6 +228,12 @@ services:
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stderr
       DECK_KONG_ADDR: http://localhost:8101
+      KC_HOST: ${KC_HOST}
+      KC_PORT: ${KC_PORT}
+      ETL_KG_HOST: ${ETL_KG_HOST}
+      ETL_KG_PORT: ${ETL_KG_PORT}
+      UPSTREAM_HOST: ${UPSTREAM_HOST}
+      UPSTREAM_PORT: ${UPSTREAM_PORT}
     ports:
       - 8100:8100
       - 8101:8101
@@ -254,6 +260,12 @@ services:
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stderr
       KONG_DECLARATIVE_CONFIG: "/opt/kong/kong.yaml"
+      KC_HOST: ${KC_HOST}
+      KC_PORT: ${KC_PORT}
+      ETL_KG_HOST: ${ETL_KG_HOST}
+      ETL_KG_PORT: ${ETL_KG_PORT}
+      UPSTREAM_HOST: ${UPSTREAM_HOST}
+      UPSTREAM_PORT: ${UPSTREAM_PORT}
     ports:
       - 8000:8000
       - 8001:8001
