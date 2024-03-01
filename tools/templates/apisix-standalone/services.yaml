@@ -15,6 +15,6 @@ services:
       hash_on: vars
       scheme: http
       nodes:
-      - host: httpgobin
-        port: 8080
+      - host: ${{UPSTREAM_HOST}}
+        port: ${{UPSTREAM_PORT}}
         weight: 1

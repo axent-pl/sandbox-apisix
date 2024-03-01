@@ -1,8 +1,8 @@
-import randomname
+# import randomname
 import yaml
 import os
 
-N = 1000
+N = 100
 dir = os.path.dirname(__file__)
 
 SERVICE_NAMES = yaml.safe_load(

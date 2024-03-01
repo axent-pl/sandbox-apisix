@@ -4,7 +4,7 @@ conf:
     port: 9000            # `manager api` listening port
   etcd:
     endpoints:            # supports defining multiple etcd host addresses for an etcd cluster
-      - apisix-db:2379
+      - ${DB_A6DC_HOST}:${DB_A6DC_PORT}
                           # etcd basic auth info
     # username: "root"    # ignore etcd username if not enable etcd auth
     # password: "123456"  # ignore etcd password if not enable etcd auth

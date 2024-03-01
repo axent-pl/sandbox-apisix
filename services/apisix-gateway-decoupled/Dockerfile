@@ -10,6 +10,6 @@ RUN mkdir -p /home/apisix && \
     chown -R apisix:apisix /home/apisix
 
 USER apisix
-COPY adc.yaml /home/apisix/.adc.yaml 
-COPY routes.yaml /home/apisix/routes.yaml
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY --chown=636:636 adc.yaml /home/apisix/.adc.yaml 
+COPY --chown=636:636 routes.yaml /home/apisix/routes.yaml
+COPY --chown=636:636 docker-entrypoint.sh /docker-entrypoint.sh

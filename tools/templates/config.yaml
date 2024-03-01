@@ -7,9 +7,9 @@ global_rules:
       _meta:
         disable: false
       batch_max_size: 1
-      host: apisix-etl
+      host: ${ETL_A6_HOST}
       name: tcp logger
-      port: 1111
+      port: ${ETL_A6_PORT}
       tls: false
     prometheus:
       _meta:

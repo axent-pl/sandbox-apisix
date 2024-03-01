@@ -21,36 +21,11 @@ set -eo pipefail
 PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 
 # added {{{
-
-echo "$(sed 's/${ETL_A6_HOST}/'$ETL_A6_HOST'/g' /home/apisix/routes.yaml)" > /home/apisix/routes.yaml
-echo "$(sed 's/${ETL_A6_PORT}/'$ETL_A6_PORT'/g' /home/apisix/routes.yaml)" > /home/apisix/routes.yaml
-echo "$(sed 's/${UPSTREAM_HOST}/'$UPSTREAM_HOST'/g' /home/apisix/routes.yaml)" > /home/apisix/routes.yaml
-echo "$(sed 's/${UPSTREAM_PORT}/'$UPSTREAM_PORT'/g' /home/apisix/routes.yaml)" > /home/apisix/routes.yaml
-
-rm -f /home/apisix/routes-loaded
-load_config() {
-  SECONDS=0
-  echo "[INFO ][axent-pl]: gateway startup started"
-  while true; do
-    DURATION=$SECONDS
-    if ! adc dump -o /tmp/config.yaml 2>/dev/null; then
-      echo "[INFO ][axent-pl]: adc dump failed, retrying..."
-      sleep 1
-    else
-      echo "[INFO ][axent-pl]: adc dump successful."
-      echo "[INFO ][axent-pl]: gateway startup done in $DURATION seconds"
-      break
-    fi
-  done
-  echo "[INFO ][axent-pl]: adc sync started"
-  SECONDS=0
-  adc sync -f /home/apisix/routes.yaml > /dev/null
-  touch /home/apisix/routes-loaded
-  DURATION=$SECONDS
-  echo "[INFO ][axent-pl]: adc sync done in $DURATION seconds"
-}
-load_config &
-# }}}
+echo "$(sed 's/${ETL_A6_HOST}/'$ETL_A6_HOST'/g' ${PREFIX}/conf/apisix.yaml)" > ${PREFIX}/conf/apisix.yaml
+echo "$(sed 's/${ETL_A6_PORT}/'$ETL_A6_PORT'/g' ${PREFIX}/conf/apisix.yaml)" > ${PREFIX}/conf/apisix.yaml
+echo "$(sed 's/${UPSTREAM_HOST}/'$UPSTREAM_HOST'/g' ${PREFIX}/conf/apisix.yaml)" > ${PREFIX}/conf/apisix.yaml
+echo "$(sed 's/${UPSTREAM_PORT}/'$UPSTREAM_PORT'/g' ${PREFIX}/conf/apisix.yaml)" > ${PREFIX}/conf/apisix.yaml
+# }}} added
 
 if [[ "$1" == "docker-start" ]]; then
     if [ "$APISIX_STAND_ALONE" = "true" ]; then

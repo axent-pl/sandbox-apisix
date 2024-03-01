@@ -1,6 +1,13 @@
 # sandbox-apisix
 APISIX API Gateway sandbox
 
+## Prerequisites
+
+Init `httpster` submodule
+```shell
+git submodule update --init --recursive
+```
+
 ## Usage
 
 Start one or more available profiles

@@ -7,9 +7,9 @@ global_rules:
       _meta:
         disable: false
       batch_max_size: 1
-      host: apisix-etl
+      host: ${ETL_A6_HOST}
       name: tcp logger
-      port: 1111
+      port: ${ETL_A6_PORT}
       tls: false
     prometheus:
       _meta:
@@ -30,8 +30,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-aroma-service
   hosts:
@@ -48,8 +48,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-bagel-service
   hosts:
@@ -66,8 +66,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-balinese-service
   hosts:
@@ -84,8 +84,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-batter-service
   hosts:
@@ -102,8 +102,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-beans-service
   hosts:
@@ -120,8 +120,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-beer-service
   hosts:
@@ -138,8 +138,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-bengal-service
   hosts:
@@ -156,8 +156,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-birman-service
   hosts:
@@ -174,8 +174,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-biscuit-service
   hosts:
@@ -192,8 +192,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-bobtail-service
   hosts:
@@ -210,8 +210,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-bombay-service
   hosts:
@@ -228,8 +228,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-bread-service
   hosts:
@@ -246,8 +246,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-broth-service
   hosts:
@@ -264,8 +264,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-burger-service
   hosts:
@@ -282,8 +282,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-burmese-service
   hosts:
@@ -300,8 +300,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-burrito-service
   hosts:
@@ -318,8 +318,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-butter-service
   hosts:
@@ -336,8 +336,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cake-service
   hosts:
@@ -354,8 +354,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-calico-service
   hosts:
@@ -372,8 +372,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-candy-service
   hosts:
@@ -390,8 +390,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-caramel-service
   hosts:
@@ -408,8 +408,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-caviar-service
   hosts:
@@ -426,8 +426,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cheese-service
   hosts:
@@ -444,8 +444,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-chili-service
   hosts:
@@ -462,8 +462,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-chimichanga-service
   hosts:
@@ -480,8 +480,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-chocolate-service
   hosts:
@@ -498,8 +498,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cider-service
   hosts:
@@ -516,8 +516,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cobbler-service
   hosts:
@@ -534,8 +534,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cocoa-service
   hosts:
@@ -552,8 +552,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-coffee-service
   hosts:
@@ -570,8 +570,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cookie-service
   hosts:
@@ -588,8 +588,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cream-service
   hosts:
@@ -606,8 +606,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-croissant-service
   hosts:
@@ -624,8 +624,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-crumble-service
   hosts:
@@ -642,8 +642,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-cuisine-service
   hosts:
@@ -660,8 +660,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-curd-service
   hosts:
@@ -678,8 +678,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-dessert-service
   hosts:
@@ -696,8 +696,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-dish-service
   hosts:
@@ -714,8 +714,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-drink-service
   hosts:
@@ -732,8 +732,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-eggs-service
   hosts:
@@ -750,8 +750,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-empanada-service
   hosts:
@@ -768,8 +768,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-enchilada-service
   hosts:
@@ -786,8 +786,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-entree-service
   hosts:
@@ -804,8 +804,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-filet-service
   hosts:
@@ -822,8 +822,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-fish-service
   hosts:
@@ -840,8 +840,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-flour-service
   hosts:
@@ -858,8 +858,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-foie-gras-service
   hosts:
@@ -876,8 +876,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-food-service
   hosts:
@@ -894,8 +894,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-ginger-service
   hosts:
@@ -912,8 +912,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-glaze-service
   hosts:
@@ -930,8 +930,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-grill-service
   hosts:
@@ -948,8 +948,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-hamburger-service
   hosts:
@@ -966,8 +966,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-himalayan-service
   hosts:
@@ -984,8 +984,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-ice-service
   hosts:
@@ -1002,8 +1002,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-javanese-service
   hosts:
@@ -1020,8 +1020,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-juice-service
   hosts:
@@ -1038,8 +1038,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-ketchup-service
   hosts:
@@ -1056,8 +1056,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-kitchen-service
   hosts:
@@ -1074,8 +1074,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-korat-service
   hosts:
@@ -1092,8 +1092,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-lard-service
   hosts:
@@ -1110,8 +1110,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-liquor-service
   hosts:
@@ -1128,8 +1128,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-longhair-service
   hosts:
@@ -1146,8 +1146,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-margarine-service
   hosts:
@@ -1164,8 +1164,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-marinade-service
   hosts:
@@ -1182,8 +1182,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-marmalade-service
   hosts:
@@ -1200,8 +1200,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-mayo-service
   hosts:
@@ -1218,8 +1218,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-mayonnaise-service
   hosts:
@@ -1236,8 +1236,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-meat-service
   hosts:
@@ -1254,8 +1254,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-milk-service
   hosts:
@@ -1272,8 +1272,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-mousse-service
   hosts:
@@ -1290,8 +1290,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-muffin-service
   hosts:
@@ -1308,8 +1308,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-mushroom-service
   hosts:
@@ -1326,8 +1326,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-noodle-service
   hosts:
@@ -1344,8 +1344,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-nut-service
   hosts:
@@ -1362,8 +1362,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-oil-service
   hosts:
@@ -1380,8 +1380,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-olive-service
   hosts:
@@ -1398,8 +1398,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-omelette-service
   hosts:
@@ -1416,8 +1416,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-oriental-service
   hosts:
@@ -1434,8 +1434,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pan-service
   hosts:
@@ -1452,8 +1452,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pasta-service
   hosts:
@@ -1470,8 +1470,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-paste-service
   hosts:
@@ -1488,8 +1488,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pastry-service
   hosts:
@@ -1506,8 +1506,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-persian-service
   hosts:
@@ -1524,8 +1524,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pie-service
   hosts:
@@ -1542,8 +1542,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pizza-service
   hosts:
@@ -1560,8 +1560,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-plate-service
   hosts:
@@ -1578,8 +1578,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pot-service
   hosts:
@@ -1596,8 +1596,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-poutine-service
   hosts:
@@ -1614,8 +1614,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-pudding-service
   hosts:
@@ -1632,8 +1632,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-queso-service
   hosts:
@@ -1650,8 +1650,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-raclette-service
   hosts:
@@ -1668,8 +1668,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-recipe-service
   hosts:
@@ -1686,8 +1686,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-rice-service
   hosts:
@@ -1704,8 +1704,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-salad-service
   hosts:
@@ -1722,8 +1722,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-salsa-service
   hosts:
@@ -1740,8 +1740,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-sandwich-service
   hosts:
@@ -1758,8 +1758,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-sauce-service
   hosts:
@@ -1776,8 +1776,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-seasoning-service
   hosts:
@@ -1794,8 +1794,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 - name: adagio-siamese-service
   hosts:
@@ -1812,8 +1812,8 @@ services:
     hash_on: vars
     scheme: http
     nodes:
-    - host: httpgobin
-      port: 8080
+    - host: ${UPSTREAM_HOST}
+      port: ${UPSTREAM_PORT}
       weight: 1
 routes:
 - name: adagio-angora-route-list
