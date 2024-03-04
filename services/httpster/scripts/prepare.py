@@ -68,8 +68,6 @@ def call_endpoint(endpoint,authorization):
 
 if __name__ == '__main__':
     authorization = get_token()
-    # print(authorization)
-    # exit(0)
     reqs = []
     for service, url in SERVICES.items():
         try:

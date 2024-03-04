@@ -1,4 +1,3 @@
 #!/bin/sh
 
-python3 /app/prepare.py
-# 2>/dev/null | ../axent/httpster/bin/httpster -duration=2m -threads=4
+python3 /app/prepare.py 2>/dev/null | /app//bin/httpster -duration=1m -threads=4 1>/app/results/results.csv

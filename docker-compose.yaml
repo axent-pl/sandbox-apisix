@@ -17,6 +17,8 @@ services:
     - GW_A6DC_ORIGIN=${GW_A6DC_ORIGIN}
     - GW_KGSA_ORIGIN=${GW_KGSA_ORIGIN}
     - UPSTREAM_ORIGIN=${UPSTREAM_ORIGIN}
+    volumes:
+      - ./results:/app/results
     networks:
       - ax
 
