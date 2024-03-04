@@ -3,8 +3,27 @@ version: '3.4'
 name: apigw
 
 services:
+  test-agent:
+    profiles: ["test-agent"]
+    build:
+      context: services/httpster
+    environment:
+    - KC_ORIGIN=${KC_ORIGIN}
+    - KC_CLIENT=${KC_CLIENT}
+    - KC_SECRET=${KC_SECRET}
+    - KC_USER=${KC_USER}
+    - KC_PASS=${KC_PASS}
+    - GW_A6SA_ORIGIN=${GW_A6SA_ORIGIN}
+    - GW_A6DC_ORIGIN=${GW_A6DC_ORIGIN}
+    - GW_KGSA_ORIGIN=${GW_KGSA_ORIGIN}
+    - UPSTREAM_ORIGIN=${UPSTREAM_ORIGIN}
+    networks:
+      - ax
+
+  ################################################################
+
   keycloak:
-    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone", "node-services" ]
     platform: linux/x86_64
     build: 
       context: services/keycloak

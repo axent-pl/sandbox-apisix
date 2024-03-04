@@ -4,10 +4,17 @@ FROM golang:1.21.4
 WORKDIR /app
 COPY code/ /app/
 RUN go mod download && \
-    make build
+    make build && \
+    mkdir -p /app/results
 
 # apache benchmark & wrk
 RUN apt update && \
-    apt install -y wrk apache2-utils
+    apt install -y wrk apache2-utils python3-requests
 
-ENTRYPOINT [ "/app/bin/httpster" ]
+# RUN pip3 install requests
+
+COPY scripts/ /app/
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+VOLUME [ "/app/results" ]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
