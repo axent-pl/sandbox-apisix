@@ -1,6 +1,6 @@
-# import randomname
 import yaml
 import os
+import sys
 
 N = 100
 dir = os.path.dirname(__file__)
@@ -16,9 +16,9 @@ def represent_multiline_string(dumper, data):
 
 
 def generate_apisix_config_yaml():
-    TPL_CONFIG = open(f'{dir}/templates/config.yaml', 'r').read()
-    TPL_CONFIG_SERVICES = open(f'{dir}/templates/services.yaml', 'r').read()
-    TPL_CONFIG_ROUTES = open(f'{dir}/templates/routes.yaml', 'r').read()
+    TPL_CONFIG = open(f'{dir}/templates/apisix-decoupled/config.yaml', 'r').read()
+    TPL_CONFIG_SERVICES = open(f'{dir}/templates/apisix-decoupled/services.yaml', 'r').read()
+    TPL_CONFIG_ROUTES = open(f'{dir}/templates/apisix-decoupled/routes.yaml', 'r').read()
 
     config = yaml.safe_load(TPL_CONFIG)
     config['services'] = []
@@ -32,8 +32,7 @@ def generate_apisix_config_yaml():
         config['services'].extend(services['services'])
         config['routes'].extend(routes['routes'])
 
-    with open(f'{dir}/routes-apisix-{N}.yaml', 'w') as rf:
-        yaml.safe_dump(config, rf, sort_keys=False)
+    yaml.safe_dump(config, sys.stdout, sort_keys=False)
 
 
 def generate_apisix_standalone_config_yaml():
@@ -58,11 +57,8 @@ def generate_apisix_standalone_config_yaml():
         config['routes'].extend(routes['routes'])
 
     yaml.representer.SafeRepresenter.add_representer(str, represent_multiline_string)
-
-    with open(f'{dir}/routes-apisix-standalone-{N}.yaml', 'w') as rf:
-        yaml.safe_dump(config, rf, sort_keys=False)
-    with open(f'{dir}/routes-apisix-standalone-{N}.yaml', 'a') as rf:
-        rf.write("#END\n")
+    yaml.safe_dump(config, sys.stdout, sort_keys=False)
+    print("#END")
 
 
 def generate_kong_config_yaml():
@@ -81,12 +77,16 @@ def generate_kong_config_yaml():
             TPL_CONFIG_ROUTES.format(service_name=service_name))
         services['services'][0]['routes'] = routes['routes']
         config['services'].extend(services['services'])
-
-    with open(f'{dir}/routes-kong-{N}.yaml', 'w') as rf:
-        yaml.safe_dump(config, rf, sort_keys=False)
+    yaml.representer.SafeRepresenter.add_representer(str, represent_multiline_string)
+    yaml.safe_dump(config, sys.stdout, sort_keys=False)
 
 
 if __name__ == '__main__':
-    generate_apisix_config_yaml()
-    generate_apisix_standalone_config_yaml()
-    generate_kong_config_yaml()
+    N = int(sys.argv[1])
+    GW = sys.argv[2]
+    if GW == 'apisix-decoupled':
+        generate_apisix_config_yaml()
+    elif GW == 'apisix-standalone':
+        generate_apisix_standalone_config_yaml()
+    elif GW == 'kong-decoupled'  or GW == 'kong-standalone':
+        generate_kong_config_yaml()

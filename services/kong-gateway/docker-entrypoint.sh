@@ -26,7 +26,7 @@ load_config() {
   if [[ "$KONG_DATABASE" == "postgres" ]]; then
     echo "[INFO ][axent-pl]: sync started"
     SECONDS=0
-    deck gateway sync /opt/kong/kong.yaml
+    deck gateway sync /opt/kong/kong-decoupled.yaml
     DURATION=$SECONDS
     echo "[INFO ][axent-pl]: sync done in $DURATION seconds"
   fi

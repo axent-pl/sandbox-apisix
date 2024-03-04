@@ -11,3 +11,4 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 USER kong
 COPY --chown=kong:kong kong.yaml /opt/kong/kong.yaml
+COPY --chown=kong:kong kong-decoupled.yaml /opt/kong/kong-decoupled.yaml
