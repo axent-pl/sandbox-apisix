@@ -4,7 +4,7 @@ name: apigw
 
 services:
   test-agent:
-    profiles: ["test-agent"]
+    profiles: ["test-agent", "node-test-agent"]
     build:
       context: services/httpster
     environment:
@@ -45,7 +45,7 @@ services:
   ################################################################
 
   apisix-gateway:
-    profiles: [ "apisix-standalone" ]
+    profiles: [ "apisix-standalone", "node-gateways" ]
     platform: linux/x86_64
     build:
       context: services/apisix-gateway-standalone
@@ -64,7 +64,7 @@ services:
       - ax
 
   apisix-db:
-    profiles: [ "apisix-decoupled" ]
+    profiles: [ "apisix-decoupled", "node-databases" ]
     image: bitnami/etcd:3.5.7
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
@@ -78,7 +78,7 @@ services:
       - ax
 
   apisix-gateway-decoupled:
-    profiles: [ "apisix-decoupled" ]
+    profiles: [ "apisix-decoupled", "node-gateways" ]
     platform: linux/x86_64
     build:
       context: services/apisix-gateway-decoupled
@@ -104,7 +104,7 @@ services:
       - ax
 
   apisix-dashboard:
-    profiles: [ "apisix-decoupled" ]
+    profiles: [ "apisix-decoupled", "node-gateways" ]
     platform: linux/x86_64
     build:
       context: services/apisix-dashboard
@@ -120,7 +120,7 @@ services:
       - ax
 
   apisix-etl:
-    profiles: [ "apisix-decoupled", "apisix-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "node-monitoring" ]
     build:
       context: services/apisix-etl
     environment:
@@ -131,7 +131,7 @@ services:
   ################################################################
 
   httpgobin:
-    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone", "node-services" ]
     build:
       context: services/microservice
     ports:
@@ -142,7 +142,7 @@ services:
   ################################################################
 
   grafana:
-    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone", "node-monitoring" ]
     build: 
       context: services/grafana
     ports:
@@ -154,7 +154,7 @@ services:
       - ax
 
   grafana-loki:
-    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone", "node-monitoring" ]
     build: 
       context: services/grafana-loki
     ports:
@@ -168,7 +168,7 @@ services:
       - ax
 
   prometheus:
-    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone" ]
+    profiles: [ "apisix-decoupled", "apisix-standalone", "kong-decoupled", "kong-standalone", "node-monitoring" ]
     build:
       context: services/prometheus
     environment:
@@ -187,7 +187,7 @@ services:
 
   kong-db:
     image: postgres:9.5
-    profiles: [ "kong-decoupled" ]
+    profiles: [ "kong-decoupled", "node-databases" ]
     environment:
       POSTGRES_DB: kong
       POSTGRES_USER: kong
@@ -202,7 +202,7 @@ services:
       - ax
 
   kong-migrations:
-    profiles: [ "kong-decoupled" ]
+    profiles: [ "kong-decoupled", "node-databases" ]
     build:
       context: services/kong-gateway
     command: kong migrations bootstrap
@@ -220,7 +220,7 @@ services:
     restart: on-failure
 
   kong-migrations-up:
-    profiles: [ "kong-decoupled" ]
+    profiles: [ "kong-decoupled", "node-databases" ]
     build:
       context: services/kong-gateway
     command: kong migrations up && kong migrations finish
@@ -238,7 +238,7 @@ services:
     restart: on-failure
 
   kong-gateway-decoupled:
-    profiles: [ "kong-decoupled" ]
+    profiles: [ "kong-decoupled", "node-gateways" ]
     build:
       context: services/kong-gateway
     depends_on:
@@ -277,7 +277,7 @@ services:
       - ax
 
   kong-gateway:
-    profiles: [ "kong-standalone" ]
+    profiles: [ "kong-standalone", "node-gateways" ]
     build:
       context: services/kong-gateway
     environment:
@@ -309,7 +309,7 @@ services:
       - ax
 
   kong-etl:
-    profiles: [ "kong-decoupled", "kong-standalone" ]
+    profiles: [ "kong-decoupled", "kong-standalone", "node-monitoring" ]
     build:
       context: services/kong-etl
     environment:
