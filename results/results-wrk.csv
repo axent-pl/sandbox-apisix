@@ -1,0 +1,9 @@
+Running 1m test @ http://apisix-gateway:9080/anything/of-foo
+  4 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    57.11ms   96.34ms   1.49s    93.55%
+    Req/Sec    52.21     32.31   267.00     73.95%
+  11971 requests in 1.00m, 33.79MB read
+  Socket errors: connect 0, read 0, write 0, timeout 1
+Requests/sec:    199.07
+Transfer/sec:    575.45KB

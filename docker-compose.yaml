@@ -17,6 +17,15 @@ services:
     - GW_A6DC_ORIGIN=${GW_A6DC_ORIGIN}
     - GW_KGSA_ORIGIN=${GW_KGSA_ORIGIN}
     - UPSTREAM_ORIGIN=${UPSTREAM_ORIGIN}
+    command:
+      # - httpster
+      # - 1m
+      # - "4"
+      - wrk
+      - 1m
+      - "4"
+      - "10"
+      - http://apisix-gateway:9080
     volumes:
       - ./results:/app/results
     networks:
