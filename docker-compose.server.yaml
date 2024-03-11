@@ -1,0 +1,329 @@
+version: '3.4'
+
+name: apigw
+
+services:
+  test-agent:
+    profiles: ["node-testagent"]
+    build:
+      context: services/httpster
+    environment:
+    - KC_ORIGIN=${KC_ORIGIN}
+    - KC_CLIENT=${KC_CLIENT}
+    - KC_SECRET=${KC_SECRET}
+    - KC_USER=${KC_USER}
+    - KC_PASS=${KC_PASS}
+    - GW_A6SA_ORIGIN=${GW_A6SA_ORIGIN}
+    - GW_A6DC_ORIGIN=${GW_A6DC_ORIGIN}
+    - GW_KGSA_ORIGIN=${GW_KGSA_ORIGIN}
+    - UPSTREAM_ORIGIN=${UPSTREAM_ORIGIN}
+    command:
+      # - httpster
+      # - 1m
+      # - "4"
+      - wrk
+      - 1m
+      - "4"
+      - "10"
+      - http://apisix-gateway:9080
+    volumes:
+      - ./results:/app/results
+    networks:
+      - ax
+
+  ################################################################
+
+  keycloak:
+    profiles: [ "node-service" ]
+    build: 
+      context: services/keycloak
+    command:
+      - start-dev
+      - --http-port=2380
+      - --http-relative-path=/auth
+      - --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "2380:2380"
+    networks:
+      - ax
+
+  ################################################################
+
+  apisix-gateway:
+    profiles: [ "node-gateway-a6sa" ]
+    build:
+      context: services/apisix-gateway-standalone
+    environment:
+      - APISIX_STAND_ALONE=true
+      - ETL_A6_HOST=${ETL_A6_HOST}
+      - ETL_A6_PORT=${ETL_A6_PORT}
+      - UPSTREAM_HOST=${UPSTREAM_HOST}
+      - UPSTREAM_PORT=${UPSTREAM_PORT}
+    ports:
+      - 9080:9080
+      - 9091:9091
+    networks:
+      - ax
+
+  apisix-db:
+    profiles: [ "node-database" ]
+    image: bitnami/etcd:3.5.7
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=${DB_A6DC_ORIGIN}
+    ports:
+      - 2379:2379
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 5s
+      timeout: 10s
+      retries: 6
+    networks:
+      - ax
+
+  apisix-gateway-decoupled:
+    profiles: [ "node-gateway-a6dc" ]
+    build:
+      context: services/apisix-gateway-decoupled
+    environment:
+      - APISIX_DEPLOYMENT_ETCD_HOST=["${DB_A6DC_ORIGIN}"]
+      - ETL_A6_HOST=${ETL_A6_HOST}
+      - ETL_A6_PORT=${ETL_A6_PORT}
+      - UPSTREAM_HOST=${UPSTREAM_HOST}
+      - UPSTREAM_PORT=${UPSTREAM_PORT}
+    ports:
+      - 9080:9080
+      - 9091:9091
+    healthcheck:
+      test: ["CMD", "cat", "/home/apisix/routes-loaded"]
+      interval: 30s
+      timeout: 10s
+      retries: 30
+    networks:
+      - ax
+
+  apisix-dashboard:
+    profiles: [ "node-gateway-a6dc" ]
+    build:
+      context: services/apisix-dashboard
+    environment:
+      - DB_A6DC_HOST=${DB_A6DC_HOST}
+      - DB_A6DC_PORT=${DB_A6DC_PORT}
+    ports:
+      - 9000:9000
+    networks:
+      - ax
+
+  apisix-etl:
+    profiles: [ "node-monitoring" ]
+    build:
+      context: services/apisix-etl
+    environment:
+      - LOKI_HOST=${LOKI_HOST}
+    ports:
+      - 1111:1111
+    depends_on:
+      grafana-loki:
+        condition: service_healthy
+    networks:
+      - ax
+
+  ################################################################
+
+  httpgobin:
+    profiles: [ "node-service" ]
+    build:
+      context: services/microservice
+    ports:
+      - 8080:8080
+    networks:
+      - ax
+
+  ################################################################
+
+  grafana:
+    profiles: [ "node-monitoring" ]
+    build: 
+      context: services/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      grafana-loki:
+        condition: service_healthy
+    networks:
+      - ax
+
+  grafana-loki:
+    profiles: [ "node-monitoring" ]
+    build: 
+      context: services/grafana-loki
+    ports:
+      - 3100:3100
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://grafana-loki:3100/ready"]
+      interval: 5s
+      timeout: 10s
+      retries: 6
+    networks:
+      - ax
+
+  prometheus:
+    profiles: [ "node-monitoring" ]
+    build:
+      context: services/prometheus
+    environment:
+      - GW_A6SA_HOST=${GW_A6SA_HOST}
+      - GW_A6SA_METRICS_PORT=${GW_A6SA_METRICS_PORT}
+      - GW_A6DC_HOST=${GW_A6DC_HOST}
+      - GW_A6DC_METRICS_PORT=${GW_A6DC_METRICS_PORT}
+      - GW_KGSA_HOST=${GW_KGSA_HOST}
+      - GW_KGSA_METRICS_PORT=${GW_KGSA_METRICS_PORT}
+      - GW_KGDC_HOST=${GW_KGDC_HOST}
+      - GW_KGDC_METRICS_PORT=${GW_KGDC_METRICS_PORT}
+    networks:
+      - ax
+
+  ################################################################
+
+  kong-db:
+    image: postgres:9.5
+    profiles: [ "node-database" ]
+    environment:
+      POSTGRES_DB: kong
+      POSTGRES_USER: kong
+      POSTGRES_PASSWORD: kong
+    ports:
+      - 5432:5432
+    healthcheck:
+      test:
+        ["CMD", "pg_isready", "-d", "kong", "-U", "kong"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      - ax
+
+  kong-migrations:
+    profiles: [ "node-database" ]
+    build:
+      context: services/kong-gateway
+    command: kong migrations bootstrap
+    depends_on:
+      kong-db:
+        condition: service_healthy
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_DATABASE: kong
+      KONG_PG_HOST: kong-db
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kong
+    networks:
+      - ax
+    restart: on-failure
+
+  kong-migrations-up:
+    profiles: [ "node-database" ]
+    build:
+      context: services/kong-gateway
+    command: kong migrations up && kong migrations finish
+    depends_on:
+      kong-db:
+        condition: service_healthy
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_DATABASE: kong
+      KONG_PG_HOST: kong-db
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kong
+    networks:
+      - ax
+    restart: on-failure
+
+  kong-gateway-decoupled:
+    profiles: [ "node-gateway-kgdc" ]
+    build:
+      context: services/kong-gateway
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_DATABASE: kong
+      KONG_PG_HOST: ${DB_KGDC_HOST}
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kong
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_PROXY_LISTEN: "0.0.0.0:8100"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8101"
+      KONG_ADMIN_GUI_LISTEN: "0.0.0.0:8102"
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      DECK_KONG_ADDR: http://localhost:8101
+      KC_HOST: ${KC_HOST}
+      KC_PORT: ${KC_PORT}
+      ETL_KG_HOST: ${ETL_KG_HOST}
+      ETL_KG_PORT: ${ETL_KG_PORT}
+      UPSTREAM_HOST: ${UPSTREAM_HOST}
+      UPSTREAM_PORT: ${UPSTREAM_PORT}
+    ports:
+      - 8000:8000
+      - 8001:8001
+      - 8002:8002
+    healthcheck:
+      test: [ "CMD", "kong", "health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    networks:
+      - ax
+
+  kong-gateway:
+    profiles: [ "node-gateway-kgsa" ]
+    build:
+      context: services/kong-gateway
+    environment:
+      KONG_DATABASE: off
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_PROXY_LISTEN: "0.0.0.0:8000"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001"
+      KONG_ADMIN_GUI_LISTEN: "0.0.0.0:8002"
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_DECLARATIVE_CONFIG: "/opt/kong/kong.yaml"
+      KC_HOST: ${KC_HOST}
+      KC_PORT: ${KC_PORT}
+      ETL_KG_HOST: ${ETL_KG_HOST}
+      ETL_KG_PORT: ${ETL_KG_PORT}
+      UPSTREAM_HOST: ${UPSTREAM_HOST}
+      UPSTREAM_PORT: ${UPSTREAM_PORT}
+    ports:
+      - 8000:8000
+      - 8001:8001
+      - 8002:8002
+    healthcheck:
+      test: [ "CMD", "kong", "health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    networks:
+      - ax
+
+  kong-etl:
+    profiles: [ "node-monitoring" ]
+    build:
+      context: services/kong-etl
+    environment:
+      - LOKI_HOST=${LOKI_HOST}
+    ports:
+      - 1111:1111
+    depends_on:
+      grafana-loki:
+        condition: service_healthy
+    networks:
+      - ax
+
+networks:
+  ax:
+    driver: bridge
