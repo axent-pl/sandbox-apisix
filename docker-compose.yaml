@@ -221,7 +221,7 @@ services:
     environment:
       KONG_DATABASE: postgres
       KONG_PG_DATABASE: kong
-      KONG_PG_HOST: kong-db
+      KONG_PG_HOST: ${DB_KGDC_HOST}
       KONG_PG_USER: kong
       KONG_PG_PASSWORD: kong
     networks:
@@ -239,7 +239,7 @@ services:
     environment:
       KONG_DATABASE: postgres
       KONG_PG_DATABASE: kong
-      KONG_PG_HOST: kong-db
+      KONG_PG_HOST: ${DB_KGDC_HOST}
       KONG_PG_USER: kong
       KONG_PG_PASSWORD: kong
     networks:
@@ -256,7 +256,7 @@ services:
     environment:
       KONG_DATABASE: postgres
       KONG_PG_DATABASE: kong
-      KONG_PG_HOST: kong-db
+      KONG_PG_HOST: ${DB_KGDC_HOST}
       KONG_PG_USER: kong
       KONG_PG_PASSWORD: kong
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
