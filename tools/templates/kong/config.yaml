@@ -19,6 +19,7 @@ consumers:
     custom_id: jwt-consumer-id
     jwt_secrets:
       - algorithm: RS256
+        secret: secret
         key: http://${KC_HOST}:${KC_PORT}/auth/realms/bank
         rsa_public_key: |
           -----BEGIN PUBLIC KEY-----
